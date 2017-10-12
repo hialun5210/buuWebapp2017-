@@ -8,8 +8,10 @@
     vue2 + RequireJS + jquery + localStorage
 
 ##功能模块
+
     包括不同城市自动地位显示不同维修项目，在线下单，购物车，多层级本地存储保存购物车，一键下单，地址添加修改删除，定位用户地址，价格的切换显示，个人中心，日历插件等。
 
 
 ##在线预览
+
     <a href="https://hialun5210.github.io/buuWebapp2017-/." target="_blank">在线预览</a>
