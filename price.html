@@ -1,0 +1,279 @@
+
+
+
+ 
+
+
+<html>
+<head>
+
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>服务价格</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<link href="css/BuuWebApp.css?1" type="text/css" rel="stylesheet" />
+<link href="css/2017731buucss.css" type="text/css" rel="stylesheet"/>
+<script type="text/javascript" src="js/jquery-1.8.3.min.js"></script>
+<script type="text/javascript" src="js/BuuWebApp.js"></script>
+<script type="text/javascript" src="js/vue.js"></script>
+</head>
+<body>
+
+<div class="nav_head postion_abs" style="top:0px;">服务报价</div>
+<div id="vuebox">
+<div class="price_ct">
+<div class="sidebar overflow-col">
+<ul>
+
+    <li    data-id="1" @click="selectCategory2($event,1)">防水/补漏</li>
+
+    <li    data-id="6" @click="selectCategory2($event,6)">水电/疏通</li>
+
+    <li    data-id="3" @click="selectCategory2($event,3)">墙面刷新</li>
+
+    <li    data-id="4" @click="selectCategory2($event,4)">地面维修</li>
+
+    <li    data-id="2" @click="selectCategory2($event,2)">天花维修</li>
+
+    <li    data-id="5" @click="selectCategory2($event,5)">五金/洁具</li>
+
+    <li    data-id="12" @click="selectCategory2($event,12)">门窗/护栏</li>
+
+    <li    data-id="13" @click="selectCategory2($event,13)">省心改造套餐</li>
+
+    <li    data-id="9" @click="selectCategory2($event,9)">其他项目</li>
+ 
+</ul>
+</div>
+                  
+                  <ul class="area clearfix  overflow-col">
+	    			   <li v-for="(item,index) in category2" >
+	    				    <h3  v-bind:class="{'on':cate2select==index}" @click="changecate2(item.categoryid,index,$event)" >{{item.repaircategoryname}}<span></span></h3>
+                            <ul class="price_list" v-show="cate2select==index">
+                            <li class="price_det " v-for="(items,index) in category3" @click="showPriceDetails(index)">
+                            <a href="javascript:">
+                            <em class="price_list_left overflow_ellipsis" v-text="items.name"></em><em class="price_list_right overflow_ellipsis" v-text="items.pricememo"></em></a>
+                            </li> 
+                            </ul>
+	    				</li>
+	    			</ul>
+</div>
+
+
+
+
+<div class="requre_order_bg" id="loginmodal"></div>
+<div class="price_details">
+
+<p class="price_p w90">项目名称</p>
+<div class="price_mingxi w84">{{catedetail.name}}</div>
+
+<p class="price_p w90">范畴</p>
+<div class="price_mingxi w84">{{catedetail.usedscope}}</div>
+
+<div class="detail_price_box clearfix">
+
+<div class="detail_price_felx floatleft" >
+<p class="price_p">人工单价</p>
+<div class="price_mingxi">{{catedetail.pricememo}}</div>
+</div>
+
+<div class="detail_price_felx  floatright">
+<p class="price_p">材料选购方式</p>
+<div class="price_mingxi">{{catedetail.purchasememo}}</div>
+</div>
+
+</div>
+<p class="price_p w90">备注</p>
+<div class="price_mingxi w84" v-html="catedetail.description"></div>
+<div class="btn_center">
+<input type="button" class="sub_btn postion_static colorbg900" value="我知道了" id="price_info_ikon" @click="price_info_ikon" />
+</div>
+</div>
+</div>
+
+   <div class="Confirm_box" style="margin-top:50px"></div>
+	
+<link rel="stylesheet" href="css/BuuWeb_global.css?v=2" type="text/css" />
+<nav class="bar-tab">
+        <a class="tab-item navmenu" href="index.html">
+            <span class="icon icon-shouye"></span>
+            <span class="tab-label">首页</span>
+        </a>
+        <a class="tab-item navmenu" href="orderlist.html">
+            <span class="icon icon-order"></span>
+            <span class="tab-label">订单</span>
+        </a>
+        <a class="tab-item postion_rel onekey_a" href="onekeyorder.html">
+            <span class="icon icon-onekey"></span>
+            <span class="tab-label">一键下单</span>
+        </a>
+        <a class="tab-item navmenu" href="price.html">
+            <span class="icon icon-price"></span>
+            <span class="tab-label">报价</span>
+        </a>
+        <a class="tab-item navmenu" href="personalcenter.html">
+            <span class="icon icon-my"></span>
+            <span class="tab-label">我的</span>
+        </a>             
+ </nav>
+	 <script>
+		 menv_footer(".bar-tab",2);
+	</script>
+</body>
+<script type="text/javascript">
+   $(function() {		
+	    $(".price_ct").css("height",window.innerHeight-105);
+	    $(".sidebar li").eq(0).addClass("active");
+	    var app =  new Vue({
+    		el:"#vuebox",
+    		data:{
+    			postUrl:"/buuwx/json/",
+    			category2:[],
+    			category3:[],
+    			cate2select:null,
+    			catedetail:[]
+    		},
+    		created:function(){
+    	         this.findcategory2detail(1);
+    	         //this.showFaultDetails();//显示故障
+    	         //console.log(JSON.parse(localStorage.results).length);
+    	         //this.productSession = JSON.parse(localStorage.results);
+    		},
+    		methods:{
+    			selectCategory2:function(e,id){
+    			   var that = this;
+    			   that.cate2select=null;
+    			   if(e.target.className=="active"){
+    				 
+    			   }
+   				   else{
+   			         //[].forEach.call(document.querySelectorAll('.sidebar .active'),el=>el.classList.remove('active'));
+   			         var sidebars = Array.prototype.slice.call((document.querySelectorAll('.sidebar .active')));
+   			         sidebars.forEach(function(obj,index){
+   			        	obj.classList.remove('active');
+   			         })
+   			         e.target.classList.add("active");
+   			       } 
+   			       that.findcategory2detail(id);  
+   			    },
+   			    findcategory2detail:function(id){
+   			           
+					   
+					   
+					   var that = this;	
+					   
+					   
+ that.category2=[
+  {
+    "categoryid": 101,
+    "cityid": 202,
+    "cityname": "深圳",
+    "delflag": 0,
+    "level": 2,
+    "parent": 1,
+    "repaircategorycityid": 71,
+    "repaircategoryname": "室内检测项目",
+    "seq": 1
+  },
+  {
+    "categoryid": 102,
+    "cityid": 202,
+    "cityname": "深圳",
+    "delflag": 0,
+    "level": 2,
+    "parent": 1,
+    "repaircategorycityid": 72,
+    "repaircategoryname": "墙、地面渗漏修复",
+    "seq": 2
+  },
+  {
+    "categoryid": 906,
+    "cityid": 202,
+    "cityname": "深圳",
+    "delflag": 0,
+    "level": 2,
+    "parent": 1,
+    "repaircategorycityid": 617,
+    "repaircategoryname": "不明项目",
+    "seq": 99
+  }
+]
+that.findcategory3detail(data[0]["categoryid"]); 					   
+					   
+					   
+					  // 
+//   			    	   $.post("/buuwxs/jsons/getSubCategosssssriesAjax.action?categoryid="+id,{},function(data){
+//      					   that.category2=data;
+//      					   that.findcategory3detail(data[0]["categoryid"]); 
+//      				   }.bind(this),'json');
+   			    },
+   			    findcategory3detail:function(id){
+   			         
+					 
+					 
+					 
+					  var that = this;	
+					  
+that.category3=[
+  {
+    "categoryid": 101,
+    "crtstaff": null,
+    "crttime": null,
+    "description": "保修期：无<br/>1、超出时间按98元/小时计算。<br/>2、含设备费<br/>3、维修更换另计",
+    "fomula": "unitprice*num;",
+    "name": "电路检测",
+    "price": 130,
+    "pricememo": "130元/小时",
+    "purchasememo": null,
+    "purchasetype": null,
+    "repairitemid": 10101,
+    "seq": 12,
+    "servicememo": null,
+    "unitname": "小时",
+    "updstaff": null,
+    "updtime": null,
+    "usedscope": "室内电箱、开关/插座、线路等"
+  }
+]
+					  
+					  
+					  
+					  
+//   			    	  $.post("/buuwxs/jsons/getRepairCoryItemsAjax.action?categoryid="+id,{},function(data){
+//      					  
+//   			    		   that.category3=data.data.items;
+//   			    		   /* console.log(JSON.stringify(data.data.items, null, 2))
+//   			    		   console.log(data.data.items,"",2); */
+//      				   }.bind(this),'json');
+
+
+   			    },
+   			    changecate2:function(id,index,e){
+   			    	var that =this;
+   			    	if(e.target.className=="on"){
+   			    		that.cate2select=null;
+   			    	}else{
+   			    		that.category3=[];
+   			    		that.cate2select=index;
+   	   			    	that.findcategory3detail(id);
+   			    	}
+   			    
+   			    },
+   			    showPriceDetails:function(index){
+   			    	var that= this;
+   			    	that.catedetail = that.category3[index];
+   			    	$("#loginmodal").show();
+   			    	$("#loginmodal").css({"height":$(document).height()});
+   			    	$(".price_details").show();
+   			    	$(".price_details").css({"top":"10px"});
+   			    },
+   			 price_info_ikon:function(){
+   				    $("#loginmodal").hide();
+			    	$(".price_details").hide();
+   			 }
+   			    
+    		}
+	    })			
+})
+</script>
+</html>

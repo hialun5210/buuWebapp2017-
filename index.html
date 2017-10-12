@@ -1,0 +1,338 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>补优优欢迎您</title>
+	
+<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<link rel="stylesheet" href="css/BuuWebApp.css?v=6" type="text/css" />
+<link rel="stylesheet" href="css/BuuWeb_global.css?v=3" type="text/css" />
+<link rel="stylesheet" href="css/swiper.min.css?v=1" type="text/css" />
+<script type="text/javascript" src="js/jquery-1.8.3.min.js?v=1"></script>
+<script type="text/javascript" src="js/buu_alerts.js?v=1"></script>
+<script type="text/javascript" src="js/BuuWebApp.js?v=1"></script>
+<!-- <script charset="utf-8" src="http://map.qq.com/api/js?v=2.exp&libraries=convertor"></script> -->
+<script>
+var deviceWidth = Math.min(750, window.innerWidth)
+document.documentElement.style.fontSize = deviceWidth / 7.5 + "px";
+</script>
+<style type="text/css">
+  .logo_links.otherlogo li a{
+    font-size: 14px;
+    padding-top:15px;
+    line-height:150%;
+    height:85px !important;
+  }
+</style>
+<script type="text/javascript">
+/* function getLocation(){
+	  //判断是否支持 获取本地位置
+	  if (navigator.geolocation)
+	    {
+	    navigator.geolocation.getCurrentPosition(showPosition);
+	    }
+	  else{x.innerHTML="浏览器不支持定位.";} 
+}
+	  
+
+	function showPosition(position) {
+		var geocoder;
+		var lat = position.coords.latitude;
+		var lng = position.coords.longitude;
+		//调用地图命名空间中的转换接口   type的可选值为 1:gps经纬度，2:搜狗经纬度，3:百度经纬度，4:mapbar经纬度，5:google经纬度，6:搜狗墨卡托
+		qq.maps.convertor.translate(new qq.maps.LatLng(lat, lng), 1, function(
+				res) {
+			//取出矫正后的经纬度并且赋值
+			var latlng2 = res[0];
+			var lat1 = res[0].lat;
+			var lng1 = res[0].lng;
+			 getAddress(lat1,lng1);
+
+		});
+	} */
+
+	
+	/*   function getLocation(){
+		  wx.getLocation({
+				type : 'wgs84', // 默认为wgs84的gps坐标，如果要返回直接给openLocation用的火星坐标，可传入'gcj02'
+				success : function(res) {
+					 alert(JSON.stringify(res)); 
+					  var latitude = res.latitude; // 纬度，浮点数，范围为90 ~ -90
+				        var longitude = res.longitude; // 经度，浮点数，范围为180 ~ -180。
+				        var speed = res.speed; // 速度，以米/每秒计
+				        var accuracy = res.accuracy; // 位置精度	
+				        
+				      qq.maps.convertor.translate(new qq.maps.LatLng(latitude, longitude), 1, function(
+								res) {
+							//取出矫正后的经纬度并且赋值
+							var latlng2 = res[0];
+							var lat1 = res[0].lat;
+							var lng1 = res[0].lng;
+							 getAddress(lat1,lng1);
+
+						}); 
+				        getAddress(latitude,longitude);
+				}
+			});
+	  } */
+
+	
+	$(function(){
+		/* wx.ready(function() {
+			getLocation();
+		}); */
+		
+		 //选择区域
+		  $(".area_a").on("click", function () {
+	          $("#select_area1").fadeIn();
+			   $("#select_area1").prev().fadeIn();
+		 })
+		 
+		  $("#select_area1").on("click","span", function () {
+			  $this=$(this);
+			  $this.parent().parent().fadeOut(); 
+			  $this.parent().parent().prev().fadeOut();
+		  })
+		 
+		 $("#select_area1").on("click","li.active", function () {
+				  $this=$(this);
+				  $this.parent().parent().fadeOut(); 
+				  $this.parent().parent().prev().fadeOut();
+				   
+				
+				  $.post(
+						  '/buuwx/orderJson/setCityidSession.action',
+						  {
+							  cityid:$this.data("cityid"),
+							  cityname:$this.html(),
+							  prvname:$this.data("prvname"),
+							  prvid:$this.data("prvid")	
+				  		  },function (data){
+				  			
+				  			  
+				  			window.location="/buuwx/order/displayNewOrder.action";
+				  			  
+				  			  
+				  		  },
+				  'json');
+				   
+	      });
+	});
+		
+
+  var citynamefliter = '深圳市';
+  var cityid = '202';
+  $(function(){
+	    if(cityid=="279")
+	    {
+	    	$("#cityName span").html("红河州");
+	    	return;
+	    }	
+	    $("#cityName span").html(citynamefliter.replace(/市/, ""));
+  })
+	
+</script>
+</head>
+<body>
+<div class="top_header"><a href="javascript:;" class="area_a" id="cityName" ><span>深圳市</span></a><!-- <a href="tel:4008-033-933" class="tel_a"><span>热线</span></span></a> --></div>
+
+<div class="layerbox hide" style="z-index:99999"></div>
+<section class="buu-city-select hide" id="select_area1">
+<header class="buu-index-city-header" >
+选择所在城市<span></span>
+</header>
+<ul class="buu-index-city-ul">
+
+
+    <li class="active" data-prvid="8" data-prvname="黑龙江" data-cityid="62">哈尔滨市</li>
+
+    <li class="active" data-prvid="9" data-prvname="上海" data-cityid="75">上海市</li>
+
+    <li class="active" data-prvid="17" data-prvname="湖北" data-cityid="172">武汉市</li>
+
+    <li class="active" data-prvid="17" data-prvname="湖北" data-cityid="179">孝感</li>
+
+    <li class="active" data-prvid="19" data-prvname="广东" data-cityid="202">深圳市</li>
+
+    <li class="active" data-prvid="25" data-prvname="云南" data-cityid="279">红河哈尼族彝族自治州</li>
+
+</ul>
+</section>
+
+
+<div class="swiper-container">
+        <div class="swiper-wrapper">
+     
+        		
+        		<a class="swiper-slide" href="#">
+        		
+        		
+        		<img src="css/images/20160705213810007.jpg" height="100%" />
+        		</a>
+        	 
+        	 <!-- <a class="swiper-slide" ><img height="100%" src="http://m.buu-cn.com/buuimages/adv/20160705213810007.jpg" /></a>  -->
+        </div>
+        <div class="swiper-pagination"></div>
+</div>
+
+
+
+
+<ul class="clearfix flexonepage " id="slider_box">
+
+
+
+
+	
+	
+    
+  	
+  	
+  	
+    
+      <li><a href="products.html" ><img src="css/images/icon_1.png" /><br/>防水/补漏</a><input type="checkbox" name="" value="防水/补漏" style="display:none;" /><img src="css/images/hey.png" width="25" height="25" style="position:absolute;top:10px; right:10px;" class="star_hey"></li>
+    
+ 
+    
+    
+	
+    
+  	
+  	
+  	
+      <li><a href="products.html" ><img src="css/images/icon_6.png" /><br/>水电/疏通</a><input type="checkbox" name="" value="水电/疏通" style="display:none;" /></li>
+    
+    
+ 
+    
+    
+	
+    
+  	
+  	
+  	
+      <li><a href="products.html" ><img src="css/images/icon_3.png" /><br/>墙面刷新</a><input type="checkbox" name="" value="墙面刷新" style="display:none;" /></li>
+    
+    
+ 
+    
+    
+	
+    
+  	
+  	
+  	
+      <li><a href="products.html" ><img src="css/images/icon_4.png" /><br/>地面维修</a><input type="checkbox" name="" value="地面维修" style="display:none;" /></li>
+    
+    
+ 
+    
+    
+	
+    
+  	
+  	
+  	
+      <li><a href="products.html" ><img src="css/images/icon_2.png" /><br/>天花维修</a><input type="checkbox" name="" value="天花维修" style="display:none;" /></li>
+    
+    
+ 
+    
+    
+	
+    
+  	
+  	
+  	
+      <li><a href="products.html" ><img src="css/images/icon_5.png" /><br/>五金/洁具</a><input type="checkbox" name="" value="五金/洁具" style="display:none;" /></li>
+    
+    
+ 
+    
+    
+	
+    
+  	
+  	
+  	
+      <li><a href="products.html" ><img src="css/images/icon_12.png" /><br/>门窗/护栏</a><input type="checkbox" name="" value="门窗/护栏" style="display:none;" /></li>
+    
+    
+ 
+    
+    
+	
+    
+  	
+  	
+  	
+      <li><a href="products.html" ><img src="css/images/icon_13.png" /><br/>省心改造套餐</a><input type="checkbox" name="" value="省心改造套餐" style="display:none;" /></li>
+    
+    
+ 
+    
+    
+	
+    
+  	
+  	
+  	
+    
+ 
+    
+    
+	<li><a href="products.html"><img src="css/images/ico_tel.png" /><br/>一键呼叫</a></li>
+
+	
+
+</ul>
+
+
+<div class="mg_bt_60"></div>
+
+
+<nav class="bar-tab">
+        <a class="tab-item navmenu" href="index.html">
+            <span class="icon icon-shouye"></span>
+            <span class="tab-label">首页</span>
+        </a>
+        <a class="tab-item navmenu" href="orderlist.html">
+            <span class="icon icon-order"></span>
+            <span class="tab-label">订单</span>
+        </a>
+        <a class="tab-item postion_rel onekey_a" href="onekeyorder.html">
+            <span class="icon icon-onekey"></span>
+            <span class="tab-label">一键下单</span>
+        </a>
+        <a class="tab-item navmenu" href="price.html">
+            <span class="icon icon-price"></span>
+            <span class="tab-label">报价</span>
+        </a>
+        <a class="tab-item navmenu" href="personalcenter.html">
+            <span class="icon icon-my"></span>
+            <span class="tab-label">我的</span>
+        </a>             
+ </nav>
+<script>
+		 menv_footer(".bar-tab",0);
+</script>
+	
+ 
+ 
+<script type="text/javascript" src="js/swiper.min.js"></script>
+<script>
+var swiper = new Swiper('.swiper-container', {
+    pagination: '.swiper-pagination',
+    slidesPerView: 1,
+    loop: true,
+    paginationClickable: true,
+    spaceBetween:0,
+    centeredSlides: true,
+    autoplay: 15000,
+    autoplayDisableOnInteraction: false
+
+
+    });
+</script>
+ 
+</body>
+</html>

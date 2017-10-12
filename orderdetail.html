@@ -1,0 +1,323 @@
+
+
+
+
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>我的订单详细</title>
+<meta name="viewport"
+	content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<link rel="stylesheet"
+	href="css/BuuWebApp.css?v=1.2"
+	type="text/css" />
+	<link rel="stylesheet" href="css/2017731buucss.css" type="text/css" />
+	<link rel="stylesheet" href="css/BuuWeb_global.css?v=1.2" type="text/css" />
+<link rel="stylesheet" href="css/index.css" type="text/css" />
+<script type="text/javascript"
+	src="js/jquery-1.8.3.min.js"></script>
+<script type="text/javascript"
+	src="js/BuuWebApp.js?v=1"></script>
+	<script type="text/javascript" src="js/imageViewer.min.js"></script>
+	<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+
+<script>
+  wx.config({
+      debug: false,
+      appId: 'wx9724664185d5c297',
+      timestamp: 1507793375,
+      nonceStr: '0ff74688-1f4d-4896-b6f2-936e0c78b2c7',
+      signature: '8436cc06a438d43e523114896b3f4d704ae3fe93',
+      jsApiList: [
+                  'checkJsApi',
+                  'onMenuShareTimeline',
+                  'onMenuShareAppMessage',
+                  'scanQRCode',
+                  'chooseWXPay'
+      ]
+  });
+</script>
+</head>
+<body class="bgcolorgray">
+
+
+<input type="hidden" id="card_pay_num" value="0"/>
+
+
+
+<input type="hidden" id="card_onreadyid" value=""/>
+<input type="hidden" id="card_onreadycode" value=""/>
+<input type="hidden" id="earnestdeduct" values="0" />
+
+
+
+
+
+<div class="nav_head postion_rel">
+		
+					
+						<a href="orderlist.html" ><i></i>返回</a>订单详情
+					
+										
+					
+					
+					
+						
+	</div>
+	<div class="Confirm_box">
+	
+		<div class="confirm_header postion_rel new_header">订单信息<em class="active"></em></div>
+		<div class="details_p postion_rel">
+			编号：BUU201708211501847</br> 时间：2017-08-21
+			19:00 - 21:00<br/> 
+			状态：<span
+				class="color00afd3"> 
+					待确认
+					
+					
+					
+					
+					
+					
+					
+					
+					
+				
+			</span><br /> 
+			姓名：<br />
+			工人：<br />
+			
+			<p class="details_order_p">地址：tcl国际e城</p>
+			
+			
+			</p>
+			<p class="details_order_p">故障：</p>
+			<p class="details_order_p">描述：</p>
+			<p class="details_order_p">来源系统： 微信用户门户</p>
+			
+			
+		</div>
+	</div>
+	
+	
+	
+	<div class="Confirm_box mg_bt_60">
+	</div>
+					
+	<div class="fixed_btn bgcolorf6f7f7 ">
+		
+				
+		<input type="hidden" id="pay_je" value="0"/>
+		
+		
+		
+		<input type="hidden" id="repairorderid" value="2847"/>
+		<input type="hidden" id="repairorderno" value="BUU201708211501847"/>		
+		
+			
+			
+						
+			
+				<!-- <input type="button" class="sub_btn bgcolorccc" value="支付维修费用" /> -->
+			
+				
+	</div>
+		
+	<div class="requre_order_bg hide" id="loginmodal"></div>
+<div id="floatDiv_closeWrap"><em id="floatDiv_closeWrap_a">&nbsp;</em><em id="floatDiv_closeWrap_b">&nbsp;</em></div>
+<div class="requrey_box hide"  >
+<div class="requrey_box_head">维修金额</div>
+		
+			
+				<p data-val="0.00"
+				 id="pay_old_number">￥0.00<span>（元）</span></p>
+			
+			
+		
+
+<div class="requre_order_submit clearfix " >
+
+	
+<input type="button" class="sub_btn postion_static upbgcolor" 
+value="微信支付(￥0.00元)" id="payment"  />
+	
+	
+
+</div>
+<div style="height:60px;"></div>
+</div>	
+
+</body>
+<script>	
+var vTradeno="0";
+var tradeType="repairfee";
+wx.ready(function () {	
+	  // 10 微信支付接口
+	  // 10.1 发起支付维修费用请求
+	  document.querySelector('#payment').disabled=false;
+	  document.querySelector('#payment').onclick = function () {
+	  //alert($("#card_pay_num").val());
+	  $("#payment").addClass("bgcolorccc");
+      var params = {		    		  
+	                total_fee:$("#card_pay_num").val(),
+	                repairorderid:$("#repairorderid").val(),
+	                cardid:$("#card_onreadyid").val(),
+	                cardcode:$("#card_onreadycode").val()
+	                
+	            };
+	    $.post(  
+	                "/buuwx/json/wxPayForRepairements.action",        //服务器要接受的url  
+	                params,     //传递的参数       
+	                function(data){ //服务器返回后执行的函数 参数 data保存的就是服务器发送到客户端的数据
+		                if("packageStr" in data)
+		                {
+		                	 wx.chooseWXPay({
+		               	      timestamp: data.timeStamp,
+		               	      nonceStr: data.nonceStr,
+		               	      package: data.packageStr,
+		               	      signType: data.signType, // 注意：新版支付接口使用 MD5 加密
+		               	      paySign: data.paySign,
+		               	      success: function (res) {
+		               		        //alert(JSON.stringify(res));	
+		               		        $("#payment").removeClass("bgcolorccc");
+		               		      	vTradeno=data.tradeno;
+		               		        window.setInterval(checkWXPayStatus,1000);
+		               		     	tradeType="repairfee";
+		               		        //alert(res.resultStr);
+		               		     
+		               		        
+		               		      },
+		               		   fail: function (res) {
+		               				$("#payment").removeClass("bgcolorccc");
+		               		        alert(JSON.stringify(res));		               		         
+		               		      	
+		               		        //alert(res.resultStr);
+		               		      },
+		               		   cancel: function (res) {
+	               				$("#payment").removeClass("bgcolorccc");
+	               		                       		         
+	               		      	
+	               		        //alert(res.resultStr);
+	               		      }
+		               		      
+		               	    });   
+		                }
+		                else
+		                {
+		                	alert(JSON.stringify(data));							
+		                }      
+	                },   
+	                'json'  //数据传递的类型  json  
+	            );	 
+	    };	  
+	    
+	 // 10.1 发起支付诚意金请求	  
+
+		  document.querySelector('#confirmearnestbtn').disabled=false;
+		  document.querySelector('#confirmearnestbtn').onclick = function () {
+		  //alert($("#card_pay_num").val());
+		  $("#confirmearnestbtn").addClass("bgcolorccc");
+	      var params = {
+		                repairorderid:$("#repairorderid").val()
+		            };
+		    $.post(  
+		                "/buuwx/json/wxPayForEarnests.action",        //服务器要接受的url  
+		                params,     //传递的参数       
+		                function(data){ //服务器返回后执行的函数 参数 data保存的就是服务器发送到客户端的数据
+			                if("packageStr" in data)
+			                {
+			                	 wx.chooseWXPay({
+			               	      timestamp: data.timeStamp,
+			               	      nonceStr: data.nonceStr,
+			               	      package: data.packageStr,
+			               	      signType: data.signType, // 注意：新版支付接口使用 MD5 加密
+			               	      paySign: data.paySign,
+			               	      success: function (res) {
+			               		        //alert(JSON.stringify(res));	
+			               		        $("#confirmearnestbtn").removeClass("bgcolorccc");
+			               		      	vTradeno=data.tradeno;
+			               		        window.setInterval(checkWXPayStatus,1000);
+			               		     	tradeType="earnestfee";
+			               		        
+			               		        //alert(res.resultStr);
+			               		      },
+			               		   fail: function (res) {
+			               				$("#confirmearnestbtn").removeClass("bgcolorccc");
+			               		        alert(JSON.stringify(res));		               		         
+			               		      	
+			               		        //alert(res.resultStr);
+			               		      },
+			               		   cancel: function (res) {
+		               				$("#confirmearnestbtn").removeClass("bgcolorccc");
+		               		                       		         
+		               		      	
+		               		        //alert(res.resultStr);
+		               		      }
+			               		      
+			               	    });   
+			                }
+			                else
+			                {
+			                	alert(JSON.stringify(data));							
+			                }      
+		                },   
+		                'json'  //数据传递的类型  json  
+		            );	 
+		    };	  
+});
+
+wx.error(function (res) {
+	  alert(res.errMsg);
+	  //  $("#errorchargeinfomessage").text("");
+	  //  $('<span>'+res.errMsg+'</span>').appendTo("#errorchargeinfomessage");
+	  //  $("#errorchargeinfo").popup("open");
+	  
+	  
+	});
+function checkWXPayStatus() { 
+	$.post(  
+        "/buuwx/json/isExistsPayForWeixin.action",        //服务器要接受的url  
+        {tradeno: vTradeno},     //传递的参数       
+        function(data){ //服务器返回后执行的函数 参数 data保存的就是服务器发送到客户端的数据  
+        	if (data) {
+        		//alert('支付成功！');
+        		if(tradeType=="repairfee")
+        		{
+        			window.location="/buuwxs/userPortals/displayUserScores.action?srepairorderid=2847";
+        		}
+        		else
+        		{
+        			window.location="/buuwxs/orders/displayProcessingOrderLists.action";
+        		}
+        		
+							}
+						}, 'json' //数据传递的类型 json  
+				);
+	};
+	function confirmprice() { 
+		$("#confirmpricebtn").addClass("bgcolorccc");
+		$.post(  
+	        "/buuwxs/submitCsonfisrmOrderPriceByUserByAjaxs.action", //服务器要接受的url  
+						{
+	        	repairorderno : $("#repairorderno").val()
+						}, //传递的参数       
+						function(data) { //服务器返回后执行的函数 参数 data保存的就是服务器发送到客户端的数据  
+							if (data) {
+								if (data.success) {
+									window.location="/buuwxs/displaysProcessingOrderLists.action";
+								}
+								else
+								{
+									alert(data.message);	
+								}
+							}
+						}, 'json' //数据传递的类型 json  
+				);
+	};
+	$(function(){
+		imageViewerOpition({className:".img-list"});//图片预览
+	})
+</script>
+</html>

@@ -1,0 +1,371 @@
+
+
+
+
+
+
+
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta content="telephone=no" name="format-detection">
+<title>一键下单</title>
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<link rel="stylesheet" href="css/BuuWebApp.css?v=2" type="text/css" />
+<link rel="stylesheet" href="css/BuuWeb_global.css" type="text/css" />
+<link rel="stylesheet" href="css/calendar.css" type="text/css" />
+<link href="css/worker.css?v=1" type="text/css" rel="stylesheet">
+<script type="text/javascript" src="js/jquery-1.8.3.min.js"></script>
+<script type="text/javascript" src="js/buuAdress.js"></script>
+<script type="text/javascript" src="js/BuuWebApp.js"></script>
+<script type="text/javascript" src="js/buu_alerts.js"></script>
+<script type="text/javascript" src="js/date.js?v=2"></script>
+<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+<script type="text/javascript" src="js/vue.js?v=1"></script>
+<link rel="stylesheet" href="css/2017731buucss.css" type="text/css" />
+<link rel="stylesheet" href="css/index.css" type="text/css" />
+<script type="text/javascript" src="js/imageViewer.min.js"></script>
+<script type="text/javascript">
+
+var citydistrictname;
+var citydistrictid;
+wx.config({
+    debug: false,
+    appId: 'wx9724dfg664185d5c297',
+    timestamp: 15075454793609,
+    nonceStr: '56ddbfdfdfgdgf655-d529-49bd-9df8-2870f5af521d',
+    signature: '7bb845457b15d57729351fa886c0b9137698859d',
+    jsApiList: [
+                'checkJsApi',
+                'onMenuShareTimeline',
+                'onMenuShareAppMessage',
+                'scanQRCode',
+                'chooseWXPay',
+                'chooseImage',
+                'uploadImage',
+                'downloadImage',
+                'previewImage'
+    ]
+});
+
+</script>
+</head>
+<body>
+<input id="pic1" type="hidden" value=""/>
+<input id="pic2" type="hidden" value=""/>
+<input id="pic3" type="hidden" value=""/>
+<div class="nav_head postion_rel"><a href="index.html" ><i></i>返回</a>一键下单</div>
+
+<div id="vuebox">
+<div class="h5_nav"><span>基本信息</span></div>
+<div class="Confirm_box addressbox">
+
+
+
+	<div class="confirm_li arrow" id="adress_html" @click="selectAddress">
+	王海龙&nbsp; 13739092481<br/>地址：tcl国际e城
+	</div>
+
+    
+<div class="confirm_li arrow" id="select_date_pre" style="cursor:pointer">
+ <span v-if="date!=''">{{date}} {{date1}}-{{date2}}</span>
+ <span v-else>请选择服务时间</span>
+</div>
+<input type="hidden"   id="select_date" v-model="date" v-text="date"/>
+<input type="hidden"   id="select_date1" v-model="date1" v-text="date1"/>
+<input type="hidden"   id="select_date2" v-model="date2" v-text="date2"/>
+</div>
+
+<div class="h5_nav" style="margin-top:5px;"><span>描述故障</span></div>
+<div class="text_suggest" style="background:none; height:100px;">
+<textarea class="textarea_input" style="border-radius:10px; width:90%; padding:5px; height:81px; margin-top:8px; border:1px solid #CCC" placeholder="请补充您的故障情况" onkeyup="words_deal(this,250,'textCount');" id="suggest"></textarea>
+</div>
+
+
+<div class="h5_nav"><span>上传故障图片</span></div>
+<div class="upload_img clearfix" id="upload_img" style="background:#fff;padding-bottom:0;">
+<div id="upload_contain" >
+   
+</div>
+<div class="upload_img_list upload_pre" id="upload_pre"  >
+<a id="pickfiles" href="javascript:;">
+<img src="css/images/upload_img.png"  />
+</a>
+</div>
+</div>
+
+
+
+<!--案例图片-->
+<div id="example-img" style="display:none;"  >
+<div class="upload_img_list beRelative">
+<a href="javascript:;" >
+<img src="css/images/upload_exmaple.png"  class="img-list" />
+<i class="del-img"></i>
+</a>
+</div>
+
+
+</div>
+
+
+<!--添加图片按钮-->
+<div id="add-img-btns" style="display:none;">
+<div class="upload_img_list upload_pre" id="upload_pre" >
+<a id="pickfiles" href="javascript:;">
+<img src="css/images/upload_img.png" />
+</a>
+</div>
+</div>
+
+
+<div class="bg_btncenter">
+<input type="button" class="sub_btn upbgcolor" value="预约维修" id="submit_nex_btn" style="position:static; background:#fed900;"  id="submit_nex_btn" @click="submitOrder" />
+<p>点击预约维修,表示您已经同意<a href="javascript:void(0)"  @click="showagreementBox('showmapbox')"><<补优优免责声明>></a></p>
+</div>
+<div class="layerbox" id="loginmodal" style="display:none;"></div>
+<div class="pay_tip hide" style="margin-top:-157px;">
+<h1>温馨提示<span class="close" >x</span></h1>
+<div>如需更改预约时间请提前两小时联系我们，否则安排工匠上门后无法作业需要您支付<b>50元</b>的误工费！为了保障您的权益，请使用微信支付或POS机刷卡支付，<b>勿使用现金支付</b>。 请注意：客户若非通过本公司公众号或热线电话途径下单，将不获得本公司提供的保修权益。</div>
+<input type="button" value="我已知晓" class="btn_submit" style="width:80%; margin-left:10%; margin-bottom:8px;background:#fed900;" id="btn_ikonw"   @click="suborderinfo($event)" />
+</div>
+</div>
+<!-- -日历! -->
+<div id="date_rili"></div>
+
+<!--协议-->
+<div class="Useragreement" id="showmapbox">
+<div class="nav_head postion_rel" style="z-index:0;    position: absolute;"><a href="javascript:;" id="sureBtn"><i></i>返回</a>补优优免责声明</div>
+<!-- <header class="bar bar-nav">
+<h1 class="title">补优优免责声明</h1>
+<a class="icon  pull-left hide-cln hashico" id="sureBtn">返回</a>
+</header> -->
+<div style="top:50px;bottom:5px;overflow:auto;position:absolute; padding:0 10px;">
+   
+客户在本公司线上下单并接受服务之前，请务必仔细阅读本声明并同意本声
+明；若用户对本声明的任何条款有异议，请停止下单支付费用，并可与本公司客服联系。客户在本公司线上下单的，视为同意并接受此免责声明的全部内容。
+<br/>
+1、客户须线上下单、付款，如与工匠私下交易，该交易本公司不予承担任何责任；
+<br/>
+2、工匠维修项目交易后，客户需在系统上进行确认，未确认的视为客户已接受服务，由此产生的与工匠之间的服务纠纷（质量投诉、工艺投诉、服务投诉等），本公司不予承担责任；<br/>
+3、客户须从线上支付，如线下支付（如刷卡、现金交易），须提前与本公司客服联系以确认收款方式以及账户，否则由此产生的财务纠纷，本公司不予承担责任；<br/>
+4、客户不得与工匠私下交易，如遇到工匠要求私下交易，请拨打客户热线举报（举报电话为4008033933），若确认属实本公司将给予一定的奖励；<br/>
+5、本公司仅提供材料代购服务，但不予承担材料的质保问题，客户可选择自主选购或与工匠共同前往购买；<br/>
+6、施工过程中，如客户未按正常施工流程，要求工匠提前完工造成的质量／工艺问题，由客户自行承担，本公司不予承担质保责任；<br/>
+7、施工过程中，工匠如已提醒客户潜在施工风险，而客户坚持工匠施工的，由此产生的售后问题由客户自行承担，本公司不予承担责任；如可能涉及潜在的人身风险的，工匠可拒绝施工，由此产生法律后果由客户自行承担，本公司不承担法律责任。
+
+</div>
+</div>
+
+
+
+</body>
+<script type="text/javascript">
+ $(function(){
+    	
+    	var app =  new Vue({
+    		el:"#vuebox",
+    		data:{
+    			date:localStorage["preorderdate"]||"",
+    			date1:localStorage["starttime"]||"",
+    			date2:localStorage["endtime"]||"",
+    			postUrl:"/buuwx/json/",
+	
+    		},
+    		created:function(){
+    			
+    	        //console.log(JSON.parse(localStorage.results).length);
+    	       // this.productSession = JSON.parse(localStorage.results);
+    	       
+    		},
+    		methods:{
+    			showagreementBox:function(a){
+    				   workerCommon.goBackUrlShow(a);   
+    			 },
+               selectAddress:function(){
+            	   var that=this;
+                   if($("#select_date").text()!=""){  //如果选择了时间再去选择地址，则先把时间存起来
+                	   localStorage["preorderdate"]=$("#select_date").text();
+                	   localStorage["starttime"]=$("#select_date1").text();
+                	   localStorage["endtime"]=$("#select_date2").text();
+                   }
+                   window.location="addresslist.html?sourcetype=2";//1表示正常下单，2表示一键下单，3表示我的地址	
+               },
+               suborderinfo:function(e){
+            	   workerCommon.btnDisable(e);
+				   window.location='orderlist.html?repairorderid='+'1111';
+            	   $.post('/sbuuwxs/jsons/susbmitOneKeyByAjax.action',{
+            		     pic1:$("#pic1").val(),
+       				     pic2:$("#pic2").val(),
+       				     pic3:$("#pic3").val(),
+       				     content:$("#suggest").val(),
+          			     preorderdate:$("#select_date").text(),
+         				 starttime:$("#select_date1").text(),
+         				 endtime:$("#select_date2").text()},function(data){
+      			   if(data.success==true){
+      				        /*localStorage.removeItem("results"); */
+      				        localStorage.clear();//删除本地存储
+     					    window.location='/buuwxs/displaysOrderList.action?repairorderid='+data.message;
+     				   }else{
+     				 	   
+     				   }
+      		       },'json');
+               },
+               submitOrder:function(){
+            	   var that = this;
+            	   if($("#adress_html").html()=="请选择您的地址"){
+            		   showTips("请选择您的维修地址","");
+            		   return;
+            	   }
+            	   if($("#select_date").text()==""){
+            		   showTips("请选择维修时间","");
+            		   return;
+            	   }
+            	   else{
+            		   /* var prams = { //上传的图片，故障描述从java session里面取,地址取数据库默认地址
+            			 materialids:JSON.stringify(that.productSession),//维修项
+            			 fullnames:JSON.stringify(that.selectFaults),  //故障
+            			 preorderdate:$("#select_date").text(),
+           				 starttime:$("#select_date1").text(),
+           				 endtime:$("#select_date2").text()
+            		   }; */    
+            		   
+            		   $("#loginmodal").show();
+            		   $(".pay_tip").show();
+            	   }
+               }
+    		}
+    	})
+    	 $(".close").click(function(){
+    		   $("#loginmodal").hide();
+    		   $(".pay_tip").hide();
+    	 })
+    	 
+    	 
+    	 
+    	 var localId="";
+    	 var picName=[];
+    	 var images = {
+    	         localId: [],
+    	         serverId: [],
+    	         downloadId: [],
+    	         name:[]
+    	     };
+    	     
+    	  //上传图片
+    	 $("#upload_img").on("click",".upload_pre",function(){
+
+    	 	 var $this=$(this);
+    	 	wx.chooseImage({
+    	 		count: 1, // 默认9
+    	 	    sizeType: ['compressed'], // 可以指定是原图还是压缩图，默认二者都有
+    	 	    sourceType: ['album', 'camera'], // 可以指定来源是相册还是相机，默认二者都有
+    	     success: function (res) {
+    	    	 $this.remove();
+    	     	 images.localId = res.localIds;
+    	     	 uploadImage(res.localIds);
+    	     },
+    	     fail:function(res)
+    	     {
+    	     	alert(JSON.stringify(res));	
+    	     }
+    	 });
+    	 	
+    	  });   
+    	  
+
+    	  
+
+    	 $("#upload_img").on("click",".del-img",function(){
+    	 		var $this=$(this);	
+    	 		if($("#upload_pre").is(":hidden"))
+    	 		$("#upload_pre").show();
+    	 		var index=$("#upload_img").find(".upload_img_list").index($this.parents(".upload_img_list"));
+    	 		if(index==0){
+    	 			$("#pic1").attr("value",$("#pic2").val());
+    	 			$("#pic2").attr("value",$("#pic3").val());
+    	 			$("#pic3").attr("value","");
+    	 		}else if(index==1){
+    	 			$("#pic2").attr($("#pic3").val());
+    	 			$("#pic3").val("");
+    	 		}else{
+    	 			$("#pic3").val("");
+    	 		}
+    	 		
+    	 		setTimeout(function(){
+    	 							$this.parents(".upload_img_list").remove();
+    	 							},500);
+    	 	 });
+
+
+
+
+
+    	 /*上传图片  */
+    	 function uploadImage(localId){
+    	 	images.serverId = [];
+    	     jQuery(function(){
+    	         $.each(images.localId, function(i,n) {
+    	             wx.uploadImage({
+    	                 localId: n,
+    	                 isShowProgressTips: 1,
+    	                 success: function (res) {
+    	                 	/* sendServerID(res.serverId); */
+    	                     images.serverId.push(res.serverId);
+    	                     downLoadPictures(res.serverId);
+    	                 },
+    	                 fail: function (res) {
+    	                     alert(JSON.stringify(res));
+    	                 }
+    	             });
+    	         });
+    	     });
+    	 	
+
+    	 }
+
+    	 function downLoadPictures(serviceId){
+    	 	var params = {  
+    	 			mediaId:serviceId	
+    	     };
+    	 	$.post(  
+    	 		'/buuwx/json/downLoadPictures.action',        //服务器要接受的url  
+    	        params,     //传递的参数       
+    	        function(data){ //服务器返回后执行的函数 参数 data保存的就是服务器发送到客户端的数据
+    	 			var index=$("#upload_img").find(".upload_img_list").length;
+    	 			if(index==1){
+    	 				$("#pic1").attr("value",data);
+    	 			}else if(index==2){
+    	 				$("#pic2").attr("value",data);
+    	 			}else{
+    	 				$("#pic3").attr("value",data);
+    	 				/* document.getElementById("pic3").value = data; */
+    	 			}
+    	 		   
+    	 			$("#example-img").find("img").attr("src","/buuimages/"+data);
+        	  		var _imghtml=$("#example-img").html(),_addimg=$("#add-img-btns").html();
+        	  	    $("#upload_img").append(_imghtml+_addimg);
+        	  	     if($("#upload_img").find(".upload_img_list").length>=4){
+       	 	         $("#upload_img .upload_pre").hide();
+       	            }
+        	  	   
+        	  	 imageViewerOpition({className:"#upload_img .img-list"});//图片预览
+    	 			
+    	 			
+    	 			
+    	        },   
+    	        'json'  //数据传递的类型  json  
+    	    ); 
+    	 }
+    	 
+    	 
+    	
+ })	
+ 
+
+</script>
+<script type="text/javascript" src="js/workDialog.js"></script>
+<script type="text/javascript" src="js/workerInfoCommon.js"></script>
+
+</html>

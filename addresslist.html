@@ -1,0 +1,119 @@
+
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>我的地址</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<link rel="stylesheet" href="css/BuuWebApp.css" type="text/css" />
+<link rel="stylesheet" href="css/worker.css" type="text/css" />
+<link rel="stylesheet" href="css/BuuWeb_global.css" type="text/css" />
+<link rel="stylesheet" href="css/WorkerInfo.css" type="text/css">
+<link rel="stylesheet" href="css/2017731buucss.css" type="text/css" />
+<script type="text/javascript" src="js/jquery-1.8.3.min.js"></script>
+<script type="text/javascript" src="js/buu_alerts.js"></script>
+<script type="text/javascript" src="js/workDialog.js"></script>
+<script type="text/javascript" src="js/valiDateForm.js"></script>
+<script type="text/javascript" src="js/BuuWebApp.js"></script>
+<script type="text/javascript">
+   var str=location.href; 
+   var sourcetype =  str.split("?sourcetype=")[1];
+</script>
+<script type="text/javascript">
+
+function findall(){
+		$.post('/buuwx/address/displayAddressListByAjax.action',
+					{},
+					function(data){
+						$("#adress_select").html(data);
+			},'html');
+}
+
+
+$(document).ready(function () {
+	
+	
+	
+	findall();
+	//修改地址
+    $(document).on("click",".adr_del",function(e){
+   		e.preventDefault();  
+           var $this=$(this),
+           val_cust_id=$this.parent().data("val");
+           window.location.href="addressedit.html?sourcetype=1&&customeraddressid="+val_cust_id; 
+    });
+   	
+   //选择地址
+   $("#adress_select").on("click","li span,li p",function(){
+      var $this,$adress_p,$adress_id,$adress_span,$adress_adress,$adress_tel,$adress_name;
+      $this=$(this);
+      $adress_span=$this.parent().find("span");
+      $adress_id=$this.parent().data("val");//地址id
+      if($adress_span.hasClass("check_box")){jumpurl(sourcetype);}
+      else{
+   	   $adress_span.addClass("check_box").parent("li").siblings().find("span").removeClass("check_box");
+   	  // $.post('/buuwx/json/updateAddressIsDefault.action',
+//   			   {customeraddressid:$adress_id},
+//   			   function(data){
+//   				   if(data.success){
+//   					   showTips(data.message,"");
+//   					jumpurl(sourcetype);
+//   				   }
+//   			   },'json');
+
+
+jumpurl(sourcetype);
+
+
+      }  
+      
+
+   	
+   })
+
+});
+
+function jumpurl(){
+	  if(sourcetype==1){//1表示正常下单，2表示一键下单，3表示我的地址	
+		    window.location="orderinfo.html"; 
+	   }
+	   if(sourcetype==2){//1表示正常下单，2表示一键下单，3表示我的地址	
+		    window.location="onekeyorder.html"; 
+	   }
+	   if(sourcetype==3){//1表示正常下单，2表示一键下单，3表示我的地址	
+		   window.location="personalcenter.html";
+	   }
+}
+
+</script>
+
+
+</head>
+
+<body class="bgcolorgray">
+
+<div class="nav_head postion_rel"><a href="javascript:;" onclick="jumpurl()"><i></i>返回</a>我的地址</div>
+<div class="adress_box">
+<ul class="adress_select" id="adress_select">
+
+
+
+ 
+	<li data-val="1829" data-name="王海龙" data-tel="13739092481" data-adress="地址：tcl国际e城">
+	<span class="check_box"></span>
+	<p>个人信息：王海龙&nbsp;/ 13739092481<br>
+	服务地址：tcl国际e城
+	</p><i class="adr_del"></i>
+	</li>
+
+
+</ul>
+<a href="addressadd.html?sourcetype=1" class="adr_add_btna newbg" id="AdressListClick"><img src="css/images/addressico.png" width="19"/>新增维修服务地址</a>
+</div>
+ 
+
+
+
+</body>
+</html>

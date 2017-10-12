@@ -1,0 +1,84 @@
+@charset "utf-8";
+/* CSS Document */
+
+/*-区域弹窗---*/
+ /*modal弹出框*/
+.modal{
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            left: 0;
+            top: 0;
+            z-index: 999;
+            visibility: hidden;
+}
+
+.modal-mask {
+            position: absolute;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            top: 0;
+            opacity: 0.5;
+            filter: alpha(opacity=50);
+            background: #666;
+        }
+
+        .modal-container {
+            width: 300px;
+            background: #fff;
+            position: relative;
+            z-index: 2;
+            margin: 0 auto;
+            border: #ccc solid 1px;
+            border-radius: 5px;
+        }
+
+        .modal-head {
+            background: #f1b41d;
+            height: 50px;
+            position: relative;
+        }
+
+        .modal-title {
+            line-height: 50px;
+            padding-left: 10px;
+            font-size: 1.2rem;
+            color: #fff;
+        }
+
+        .modal-close {
+            width: 30px;
+            height: 30px;
+            display: block;
+            position: absolute;
+            right: 10px;
+            top: 10px;
+            cursor: pointer;
+            font-size: 1.2rem;
+            text-align: center;
+            line-height: 30px;
+            color: #fff;
+        }
+
+        .modal-content {
+            padding: 10px;
+        }
+
+        .modal-ul {
+            clear: both;
+        }
+
+        .modal-ul li {
+                width:127px;
+				height:40px;
+                line-height:40px;
+				padding-left:10px;
+				overflow:hidden;
+                color:#CCC;
+                display: inline-block;
+                font-size: 1.3rem;
+            }
+		 .modal-ul li a{ color:#333;}
+	     .modal_tip{ width:100%;  color:#F90; font-size:13px; border-top:1px solid #ccc; margin:3px auto; line-height:25px; padding-top:3px;}

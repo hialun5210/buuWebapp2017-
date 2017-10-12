@@ -1,0 +1,195 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>无标题文档</title>
+<link href="../css/calendar.css" type="text/css" rel="stylesheet" />
+<script type="text/javascript" src="jquery-1.8.3.min.js"></script>
+<script type="text/javascript" src="date.js"></script> 
+<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+</head>
+
+<body>
+
+
+
+
+
+<div class="cui-webView"></div>
+    <div class="cui-content">
+        <div class="calendar">
+            <div class="main">
+                <div class="mouth">
+	                <SPAN id="curYear">2012</SPAN>年
+	                <span class="blue">
+		                <select id="month">		               
+		            	</select>
+	            	</span>
+            	</div>
+                <div class="weeks">
+                    <div class="week blue">周日</div>
+                    <div class="week">周一</div>
+                    <div class="week">周二</div>
+                    <div class="week">周三</div>
+                    <div class="week">周四</div>
+                    <div class="week">周五</div>
+                    <div class="week blue">周六</div>
+                </div>
+                <div class="days" id="days">
+                    <div class="day">
+                        <div class="other">26</div>
+                    </div>
+                    <div class="day">
+                        <div class="other">27</div>
+                    </div>
+                    <div class="day">
+                        <div class="other">28</div>
+                    </div>
+                    <div class="day">
+                        <div class="other">29</div>
+                    </div>
+                    <div class="day">
+                        <div class="other">30</div>
+                    </div>
+                    <div class="day">
+                        <div class="other">31</div>
+                    </div>
+                    <div class="day">
+                        <div class="past">1</div>
+                    </div>
+                    <div class="day">
+                        <div class="past">2</div>
+                    </div>
+                    <div class="day">
+                        <div class="past">3</div>
+                    </div>
+                    <div class="day">
+                        <div class="past">4</div>
+                    </div>
+                    <div class="day">
+                        <div class="past">5</div>
+                    </div>
+                    <div class="day">
+                        <div class="past">6</div>
+                    </div>
+                    <div class="day">
+                        <div class="past">7</div>
+                    </div>
+                    <div class="day">
+                        <div class="past">8</div>
+                    </div>
+                    <div class="day">
+                        <div class="past">9</div>
+                    </div>
+                    <div class="day">
+                        <div class="past">10</div>
+                    </div>
+                    <div class="day">
+                        <div class="cur">11</div>
+                    </div>
+                    <div class="day">
+                        <div class="future">12</div>
+                    </div>
+                    <div class="day">
+                        <div class="future">13</div>
+                    </div>
+                    <div class="day">
+                        <div class="future">14</div>
+                    </div>
+                    <div class="day">
+                        <div class="future">15</div>
+                    </div>
+                    <div class="day">
+                        <div class="future">16</div>
+                    </div>
+                    <div class="day">
+                        <div class="future">17</div>
+                    </div>
+                    <div class="day">
+                        <div class="future">18</div>
+                    </div>
+                    <div class="day">
+                        <div class="future">19</div>
+                    </div>
+                    <div class="day">
+                        <div class="future">20</div>
+                    </div>
+                    <div class="day">
+                        <div class="future">21</div>
+                    </div>
+                    <div class="day">
+                        <div class="future">22</div>
+                    </div>
+                    <div class="day">
+                        <div class="future">23</div>
+                    </div>
+                    <div class="day">
+                        <div class="future">24</div>
+                    </div>
+                    <div class="day">
+                        <div class="future">25</div>
+                    </div>
+                    <div class="day">
+                        <div class="future">26</div>
+                    </div>
+                    <div class="day">
+                        <div class="future">27</div>
+                    </div>
+                    <div class="day">
+                        <div class="future">28</div>
+                    </div>
+                    <div class="day">
+                        <div class="future">29</div>
+                    </div>
+                    <div class="day">
+                        <div class="future">30</div>
+                    </div>
+                    <div class="day">
+                        <div class="other">1</div>
+                    </div>
+                    <div class="day">
+                        <div class="other">2</div>
+                    </div>
+                    <div class="day">
+                        <div class="other">3</div>
+                    </div>
+                    <div class="day">
+                        <div class="other">4</div>
+                    </div>
+                    <div class="day">
+                        <div class="other">5</div>
+                    </div>
+                    <div class="day">
+                        <div class="other">6</div>
+                    </div>
+
+                </div>
+            </div>
+           
+           
+           <div class="date_area">
+           <p>
+           <a href="javascript:;" class="selected">9:00-10:00</a><a href="javascript:;">10:00-11:00</a><a href="javascript:;">11:00-12:00</a></p>
+           <p>
+           <a href="javascript:;">12:00-13:00</a><a href="javascript:;">13:00-14:00</a><a href="javascript:;">14:00-15:00</a>
+           </p></div>
+           
+           
+           <br/>
+
+            <div class="btns">
+                <div id="btnCancel" class="button button-blue">取消</div>
+                <div class="space"></div>
+                <div id="btnSure" class="button button-green">确定</div>
+                <input type="hidden" id="dateBooking" />
+                <input type="hidden" id="date_info" value="9:00-10:00" />
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+</body>
+</html>

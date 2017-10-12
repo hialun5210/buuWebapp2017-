@@ -1,0 +1,143 @@
+@charset "utf-8";
+/*--个人中心---*/
+.user_bg{ width:100%;text-align:center; position:relative;font-size:1rem; color:#000; margin-top:5px; overflow:hidden;}
+.user_logo_center{ position:absolute; left:50%; margin-left:-13%; top:5%; width:27.5%; height:100%;}
+.grzx_logo_center{ position:absolute; left:5%; top:10%; width:24%; height:100%;}
+
+
+
+.grzx_logo_text{ color:#5d5d5d; padding-top:5%; position:absolute; left:35%; top:10%; width:50%; height:100%; text-align:left; font-size:0.8rem;}
+.user_bg .user_logo{ border-radius:50%; width:100%; height:60%; box-shadow:0px 0px 5px #888888;border:1px solid #fed900;}
+
+@media screen and (max-width: 300px) {
+ .user_bg .user_logo{height:60%;}  
+}
+@media (min-width:300px) and (max-width:320px) {
+ .user_bg .user_logo{height:65%;}  
+}
+@media (min-width:320px) and (max-width:375px) {
+ .user_bg .user_logo{height:65.5%;}  
+}
+@media (min-width:375px) and (max-width:415px) {
+ .user_bg .user_logo{height:65.6%;}  
+}
+@media (min-width:415px) and (max-width:640px) {
+ .user_bg .user_logo{height:65.6%;}  
+}
+@media (min-width:640px) and (max-width:768px) {
+ .user_bg .user_logo{height:65%;}  
+}
+@media (min-width:768px) and (max-width:1600px) {
+ .user_bg .user_logo{height:64%;}  
+}
+.user_nav{  background:#fff;  border-bottom:1px solid #dddcdc; }
+.user_nav a{padding-top:11px; padding-bottom:10px; padding-left:35px; display:block; font-size:15px; position:relative; }
+.adress{ background:url(images/grzx/ico44.png) no-repeat left center #fff;  background-position:10px;background-size:14px 14px;}
+.kajuan{ background:url(images/grzx/ico22.png) no-repeat left center #fff;  background-position:10px;background-size:14px 14px;}
+.shouyi{ background:url(images/grzx/ico11.png) no-repeat left center #fff;  background-position:10px;background-size:14px 14px;}
+.about{ background:url(images/grzx/ico33.png) no-repeat left center #fff;  background-position:10px;background-size:14px 14px;}
+.user_nav a span{
+width: 14px;
+height: 44px;
+background:url(images/arrow_right.png) center no-repeat;
+background-size: 7px 12px;
+position: absolute;
+right: 5%;
+top: 0px;
+display:block;
+}
+/*--常见问题---*/
+.question_user{font-weight:normal; padding:10px 15px; font-size:0.9rem;  display:block; background:#fff; margin-bottom:5px;  }
+.question_user time{ display:block; font-size:0.7rem; padding-left:24px; color:#CCC;}
+.question_user time span{ padding-left:8px; font-family:Tahoma, Geneva, sans-serif;}
+.question_user em{ margin-right:5px;}
+.question_user_anser{ margin-top:5px; padding:5px 15px; margin-bottom:5px; display:none;}
+.question_user_anser a{ color:#999;}
+/*--提现--*/
+.tx_user{ text-align:center; width:100%; color:#181818; border-bottom:1px solid #d7d7d7; padding-bottom:20px;}
+.tx_user img{ width:21%; padding-top:12px;}
+.tx_text{  width:60%; margin:auto; margin-top:20px; padding-left:75px; position:relative; overflow:hidden; line-height:32px; font-size:1rem;}
+.tx_text label{ position:absolute; left:3px;}
+.tx_text .tx_input{ padding:3px; border-bottom:1px solid #ff9c00; width:100%; overflow:hidden; height:25px; background:none; font-size:0.9rem; padding-left:10px;}
+.tx_tip{ line-height:21px; width:60%; margin:6px auto; font-size:0.7rem; padding-right:62px; padding-left:3px; color:#bcb8b8; position:relative;}
+.tx_tip span{ position:absolute; left:3px; }
+.tx_tip span em{ font-style:normal;}
+.work_makeout_total{ background:#fff; height:45px;padding:0px 15px; color:#ff9c00; line-height:45px;}
+/*收益--*/
+.earning_list li{
+background:#fff;
+height:90px;
+margin:5px auto;
+position:relative;
+border-bottom: 1px solid #cecece;
+font-size: 0.75rem;
+border-top: 1px solid #cecece;
+line-height: 22px;
+overflow:hidden;
+padding:5px;
+padding-left:100px;
+}
+.no_user_order li{ padding-top:25px; overflow:hidden; height:65px;}
+
+.earn_img{height:67px; width:67px; border-radius:50%; background:#fff;  display:block; overflow:hidden; left:20px; top:17px;}
+.withdraw_list li{ margin:5px auto; background:#fff;  overflow:hidden;}
+.withdraw_list li h3{ display:block; background:#fff5e6; border-bottom:1px solid #d8d8d8; padding:7px; font-size:0.8rem; font-weight:normal;padding-left:10px; position:relative;}
+.withdraw_list li h3 span{ position:absolute; right:10px;}
+.withdraw_list li div{ padding:7px; padding-left:10px; padding-right:10px; border-bottom:1px solid #d8d8d8;display:box; display: -webkit-box; display: -webkit-flex;display: -ms-flex;display: flex;}
+.withdraw_list li div span{ width:45%; display:block; text-align:left;}
+.withdraw_list li div em{ width:20%; display:block; text-align:center; font-style:normal;}
+.withdraw_list li div b{ width:35%; display:block; text-align:right; font-weight:normal;}
+
+.withdraw_list.worked_tixian li h3 span{ right:30px;}
+.withdraw_list.worked_tixian li h3 em{top:15px;}
+
+
+/*--个人中心--*/
+.user_links{ margin:5px auto;}
+.user_links li a img{ width:51px; height:51px; position:absolute; top:13px; margin-left: -25.5px;left:50%;}
+.user_links li{ background:#fff;}
+.user_links li a{ color:#848484;}
+.user_make_money{ background:#fff;}
+.user_make_money h1{ padding:5px 20px; font-size:1rem; border-bottom:1px solid #dadada; color:#303030;}
+.user_make_money p{ padding:12px 20px; line-height:23px; font-size:0.8rem;}
+
+/*---我要推广---*/
+.tg_p{ padding:5px 16px; font-size:1.5rem; color:#fff; margin:15px; background:#ff9c00; border-radius:20%;}
+.tg_text{ padding:3px 20px 30px 20px; line-height:23px; font-size:0.8rem; color:#626262;}
+.tg_img{ text-align:center; margin-top:20px;}
+.tg_img img{ width:200px; height:200px;}
+
+.rem8{ font-size:0.8rem;}
+.rem10{ font-size:1rem;}
+.rem20{ font-size:2rem; line-height:100%;}
+#ktx_money span{font-family: "Microsoft Yahei","微软雅黑"; font-size:1.3rem;}
+
+#mcover,#vcard{ position: fixed; top:0;  left:0; width:100%; height:100%;background:rgba(0, 0, 0, 0.7);  display:none;z-index:20000;}
+#mcover img,#vcard img {position: fixed;right:5px;top:5px;width: 260px;height: 180px;z-index:20001;}
+
+/*--提现方式切换--*/
+.nav_money_tx{ margin:8px 10px;}
+.nav_money_tx a:nth-child(3n) {
+    margin-right: 0%;
+}
+.nav_money_tx a {
+    border-right: 1px solid #dfdfdf;
+    border-bottom: 1px solid #dfdfdf;
+    box-sizing: border-box;
+    width: 32%;
+    height: 35px;
+    display: block;
+    background: #fff;
+    color: #605e5e;
+    line-height: 35px;
+    display: inline-block;
+    margin-right: 2%;
+	text-align:center;
+	border-radius:5px;
+}
+.nav_money_tx a.active{    
+    background: #ff9c00;
+    color: #fff;
+    border-right: 1px solid #f5bd64;
+    border-bottom: 1px solid #f5bd64;
+}

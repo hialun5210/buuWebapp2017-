@@ -1,0 +1,163 @@
+
+    
+
+
+
+<html>
+<head>
+
+<title>个人中心</title>
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<meta content="telephone=no" name="format-detection">
+<link rel="stylesheet" href="css/BuuWebApp.css" type="text/css" />
+<link rel="stylesheet" href="css/BuuWeb_global.css" type="text/css" />
+<link rel="stylesheet" href="css/Buu_user.css?v=20170825" type="text/css" />
+<link rel="stylesheet" href="css/2017731buucss.css" type="text/css" />
+<script src="yao1yao/js/jquery-1.8.3.min.js" type="text/javascript"></script>
+<script src="js/BuuWebApp.js" type="text/javascript"></script>
+<script src="https://res.wx.qq.com/open/js/jweixin-1.1.0.js"></script>
+<script>
+  
+  
+
+
+  wx.config({
+      debug: false,
+      appId: 'wx9724664185d5c297',
+      timestamp: 1507794860,
+      nonceStr: '69c4b360-4b8f-47fc-97c5-3ba34802f8c1',
+      signature: '6d4c2f562525c1ad1415938a832ce79eba9849c4',
+      jsApiList: [
+                  'checkJsApi',
+                  'addCard',
+                  'chooseCard',
+                  'openCard'
+      ]
+  });
+
+
+</script>
+
+
+
+<script>
+$(function(){
+	
+	$("#ckjp").on("click",function(){
+		
+		
+		getMyCards();
+		
+		
+	})
+});
+
+var wxstatus="notready";
+wx.ready(function () {
+	wxstatus="ready";
+	
+	
+});
+
+
+
+//获取微信卡券列表
+function getMyCards(){
+	$.post(
+			"/buuwx/personalCenterJson/displayCardsListAction.action",
+			{},
+			function(data){
+				
+				var errcode = data.obj.errcode;
+				
+				if(errcode==0){//有卡券
+					
+					var backMessage = data.obj;
+					var cardListObj = backMessage.card_list;
+					var cardListStr = JSON.stringify(cardListObj);
+					//替换所有card_id 为cardId
+					var reg=new RegExp("card_id","g"); //创建正则RegExp对象  
+					var newCardlistStr = cardListStr.replace(reg,"cardId");
+					//把字符串转为json对象
+					var cardList = eval(newCardlistStr);
+					//alert("cardList:"+cardList);
+					
+					if(cardList.length<=0){
+						  window.location="/buuwx/personalCenter/displayNoCards.action";
+						  return;
+					}
+					if(wxstatus=="ready")
+					{
+						wx.openCard({
+							//cardList: [{cardId:'pnl-UuPxjaXddvs8ZBOQlUppZ0ts',code:'692398293452'},{cardId:'pnl-UuPxjaXddvs8ZBOQlUppZ0ts',code:'984695370506'}]
+							cardList:cardList
+						});	
+					}
+				
+				}else{
+					//跳转到没有卡券页面
+					window.location="/buuwx/personalCenter/displayNoCards.action";
+				}
+				
+				
+			},
+			'json');
+}
+
+
+</script>
+<body class="bgcolorgray">
+
+<div class="nav_head postion_rel">个人中心</div>
+
+
+
+<div class="user_bg">
+<img src="css/images/grzx/user_bg2.jpg" width="100%" />
+<span class="user_logo_center">
+<img src="http://wx.qlogo.cn/mmopen/tU1F9T10WicTLw647ocFG8uic95885zPc93JuEJUE3XuYwBV8NMMGptQTY4YQxS5T6BVOyfmbtiaZln1XwAhAeEWK8EUh66YZhA/0" class="user_logo" /><br/>
+<span style="width:200px;display:block; margin-left:-100px;left:50%;position:absolute;">海纶</span>
+</span>
+</div>
+
+<!-- displayAddressList  displayMyAddressList-->
+ <div class="user_nav " style=" margin-top:10px;border-top: 1px solid #dddcdc;"><a href="addresslist.html?sourcetype=3" class="adress">常用地址<span></span></a></div>
+<div class="user_nav "><a href="#" class="kajuan " onclick="getMyCards();">我的卡券<span></span></a></div>
+
+<div class="user_nav "><a href="about.html?state=301&isFromMenu=true" class="about">关于我们<span></span></a></div>
+
+
+<div class="mg_bt_60"></div>
+
+<link rel="stylesheet" href="css/BuuWeb_global.css?v=2" type="text/css" />
+<nav class="bar-tab">
+        <a class="tab-item navmenu" href="index.html">
+            <span class="icon icon-shouye"></span>
+            <span class="tab-label">首页</span>
+        </a>
+        <a class="tab-item navmenu" href="orderlist.html">
+            <span class="icon icon-order"></span>
+            <span class="tab-label">订单</span>
+        </a>
+        <a class="tab-item postion_rel onekey_a" href="onekeyorder.html">
+            <span class="icon icon-onekey"></span>
+            <span class="tab-label">一键下单</span>
+        </a>
+        <a class="tab-item navmenu" href="price.html">
+            <span class="icon icon-price"></span>
+            <span class="tab-label">报价</span>
+        </a>
+        <a class="tab-item navmenu" href="personalcenter.html">
+            <span class="icon icon-my"></span>
+            <span class="tab-label">我的</span>
+        </a>             
+ </nav>
+	 <script>
+		 menv_footer(".bar-tab",3);
+	</script>
+
+</body>
+
+</html>
+

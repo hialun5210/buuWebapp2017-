@@ -1,0 +1,168 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>我的地址</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<link rel="stylesheet" href="css/BuuWebApp.css" type="text/css" />
+<link rel="stylesheet" href="css/2017731buucss.css" type="text/css" />
+<link rel="stylesheet" href="css/index.css" type="text/css" />
+<script type="text/javascript" src="js/jquery-1.8.3.min.js"></script>
+<script type="text/javascript" src="js/BuuWebApp.js"></script>
+<script type="text/javascript" src="js/valiDateForm.js"></script>
+<script type="text/javascript" src="js/workDialog.js"></script>
+<script type="text/javascript" src="js/workerInfoCommon.js"></script>
+<script type="text/javascript" src="js/buu_alerts.js"></script>
+<script type="text/javascript" src="js/workDialog.js"></script>
+<link rel="stylesheet" href="css/WorkerInfo.css" type="text/css">
+<link rel="stylesheet" href="css/BuuWeb_global.css" type="text/css" />
+<script type="text/javascript" src="js/vue.js"></script></head>
+<body style="background: #f6f7f7;">
+<div class="bgcolorgray"  id="AdressList" >
+<div class="nav_head postion_rel"><a href="addresslist.html?sourcetype=1" ><i></i>返回</a>编辑地址<span class="delBtnSpan" onclick="javascript:delbox()">删除</span></div>
+<input type="hidden" id="customeraddressid" value="1829">
+<input type="hidden" id="sourcetype" value="1">
+
+
+<script>
+
+
+function delbox(){
+	  jConfirm("您确认要删除该地址吗?", "",
+	           function(r) {
+	               if (r) {
+	                   $.alerts._hide();
+					   
+					   
+					   window.location.href ="addresslist.html?sourcetype=1"
+					   
+					   
+					   
+					   
+	                   var url = "/buuwx/json/deleteAddress.action" ;
+	   				$.post(url,{customeraddressid:$("#customeraddressid").val()}, function(Data) {
+	   					if (Data.success) {
+	   						showTips(Data.message,"");
+	   						$.alerts._hide();
+	   						window.location.href ="/buuwx/address/displayAddressList.action?sourcetype="+$("#sourcetype").val();     
+	    					}
+	   				});
+	   			}  else {           
+	                   return;
+	               }
+	           }, "确定", "取消");
+};
+
+</script>
+
+<div id="vuebox">
+<div class="adress_box bd_top">
+<div class="adr_add_li">
+<span class="address-plus">姓&emsp;&emsp;名：</span> 
+<input type="text" id="add_name" value="王海龙" tip="姓名">
+</div>
+<div class="adr_add_li">
+<span class="address-plus">手&emsp;&emsp;机：</span> 
+<input type="text" maxlength="11"  readonly  value="13739092481" tip="手机号">
+</div>
+
+
+<div class="adr_add_li ">
+<span class="address-plus">定位地址：</span> 
+<div class="disable_requery_box arrow daka_arrow" id="selectCoor" style="height:46px;line-height:46px;"
+ @click="showagreementBox('showmapbox')">广东省深圳市福田区福中三路市民中心A区2016室</div>
+<input type="hidden" id="mapvalue"  tip="选取坐标" />
+
+
+</div>
+
+<div class="adr_add_li">
+<span class="address-plus">详细地址：</span> 
+<input type="text"   placeholder="如小区、门牌号等" id="add_adress_text" value="" tip="详细地址" />
+</div>
+
+</div>
+
+
+<!--地图弹窗-->
+
+<div class="Useragreement" id="showmapbox">
+<!-- <header class="bar bar-nav">
+<h1 class="title">选择您所在地址</h1>
+<a class="icon  pull-left hide-cln hashico" id="sureBtn">返回</a>
+</header> -->
+<div class="nav_head postion_rel" style="z-index:0;    position: absolute;"><a href="javascript:;" id="sureBtn"><i></i>返回</a>选择您所在地址</div>
+<div style="margin-top:46px; height:100%"id="mapBox" ></div>
+</div>
+
+
+<div class="bg_btncenter"><input type="button" value="保存地址"  @click="submitbtn"  id="submit_nex_btn" class="sub_btn upbgcolor" style="position: static; background: rgb(254, 217, 0);"></div>
+
+</div>
+<script type="text/javascript">
+validate = new validate();
+
+$(function(){
+var app =  new Vue({
+	el:"#vuebox",
+	data:{
+		postUrl:"/buuwx/workerPortalJson/",
+	},
+	created:function(){
+        
+	},
+	methods:{
+	   showagreementBox:function(a){
+		   var bolMap =$("#mapBox");
+	       if(bolMap.find("iframe").length==0){workerCommon.mapApiPosition("#mapBox");}else{}
+		   workerCommon.goBackUrlShow(a);
+	   },
+	   submitbtn:function(){
+		 
+		   var add_name = $("#add_name");
+		   var add_adress_text =$("#add_adress_text");
+		   var selectCoorinfo = $("#mapvalue");
+		   if (selectCoorinfo.val()==null || selectCoorinfo.val()==""){
+		   selectCoorinfo.attr("data-city","深圳市");
+		   selectCoorinfo.attr("data-id","22.5431"+","+"114.05787");
+		   selectCoorinfo.val("广东省深圳市福田区福中三路市民中心A区2016室");
+		   };
+		   
+		    if(validate.name(add_name)&&validate.isValEmpty(add_adress_text)){ 
+			
+			
+			
+			
+			window.location.href ="addresslist.html?sourcetype=1";
+			
+			
+			
+			
+		    	 $.post('/buuwx/json/EditAddressByAjax.action',
+		    			 {customeraddressid:$("#customeraddressid").val(),
+					    custname:$("#add_name").val(),
+					    addnumber:$("#add_adress_text").val(),
+			   			coordinate:selectCoorinfo.val(),
+			   			latitude:selectCoorinfo.attr("data-id").split(",")[0],
+			   			longitude:selectCoorinfo.attr("data-id").split(",")[1],
+			   			cityname:selectCoorinfo.attr("data-city")
+			   			},
+		  			   function(data){
+		  				   if(data.success){
+		  					       showTips("修改成功",function(){
+ 		  							 window.location.href ="/buuwx/address/displayAddressList.action?sourcetype="+$("#sourcetype").val();
+		  						   });
+		  				   }
+		  				   else{
+		  					   alert(data.message);
+		  				   };
+		  			   },'json');	
+            }
+	   }
+	}
+  })
+})
+</script>
+
+</body>
+
+</html>

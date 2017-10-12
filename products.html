@@ -1,0 +1,489 @@
+<html>
+<head>
+
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>选择维修项目</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<link rel="stylesheet" href="css/BuuWebApp.css?v=3.1" type="text/css" />
+<link rel="stylesheet" href="css/BuuWeb_global.css" type="text/css" />
+<link rel="stylesheet" href="css/2017731buucss.css" type="text/css" />
+<link rel="stylesheet" href="css/index.css" type="text/css" />
+<script type="text/javascript" src="js/jquery-1.8.3.min.js"></script>
+<script type="text/javascript" src="js/buu_alerts.js"></script>
+<script type="text/javascript" src="js/BuuWebApp.js"></script>
+<script type="text/javascript" src="js/vue.js"></script>
+<script type="text/javascript" src="js/imageViewer.min.js"></script>
+<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+<script type="text/javascript">
+
+wx.config({
+    debug: false,
+    appId: 'wx9724664185d5c297',
+    timestamp: 1507790869,
+    nonceStr: '97b5c9da-f387-49db-b72a-ff9bf510e084',
+    signature: 'aa0aea904a29034e66584cb370014babb44d3dd8',
+    jsApiList: [
+                'checkJsApi',
+                'onMenuShareTimeline',
+                'onMenuShareAppMessage',
+                'scanQRCode',
+                'chooseWXPay',
+                'chooseImage',
+                'uploadImage',
+                'downloadImage',
+                'previewImage'
+    ]
+});
+
+</script>
+</head>
+<body id="bodys">
+
+<input id="pic1" type="hidden" value=""/>
+<input id="pic2" type="hidden" value=""/>
+<input id="pic3" type="hidden" value=""/>
+
+<input type="hidden" value="0" id="faultsCountHid">
+
+
+<div class="nav_head postion_rel" style="z-index:0;" ><a href="javascript:;" id="backuppage" ><i></i>返回</a>选择维修类型</div>
+
+  
+           <img src="css/images/1.png" width="100%" />
+             <p class="product_name" data-categoryid ="1">防水/补漏</p>
+  
+
+<div class="h5_nav"><span>选择要维修的物品</span></div>
+<div class="shops_box" id="shops_box">
+<ul class="clearfix">
+
+	<li data-id="1" data-val="电线电箱" data-myid="1" >
+		<a href="javascript:;" >
+		<img src="css/images/material/leakingdredge/wireelecbox.png" /><br/>
+		电线电箱
+		<span></span><b></b>
+		</a>
+	</li>
+
+	<li data-id="2" data-val="水管" data-myid="1" >
+		<a href="javascript:;" >
+		<img src="css/images/material/leakingdredge/waterpipe.png" /><br/>
+		水管
+		<span></span><b></b>
+		</a>
+	</li>
+
+	<li data-id="3" data-val="墙地面" data-myid="1" >
+		<a href="javascript:;" >
+		<img src="css/images/material/leakingdredge/groundwall.png" /><br/>
+		墙地面
+		<span></span><b></b>
+		</a>
+	</li>
+
+	<li data-id="69" data-val="市政管道" data-myid="1" >
+		<a href="javascript:;" >
+		<img src="css/images/material/leakingdredge/municipalpipe.png" /><br/>
+		市政管道
+		<span></span><b></b>
+		</a>
+	</li>
+
+	<li data-id="70" data-val="洁具" data-myid="1" >
+		<a href="javascript:;" >
+		<img src="css/images/material/leakingdredge/sanitaryware.png" /><br/>
+		洁具
+		<span></span><b></b>
+		</a>
+	</li>
+
+	<li data-id="71" data-val="管道" data-myid="1" >
+		<a href="javascript:;" >
+		<img src="css/images/material/leakingdredge/pipeline.png" /><br/>
+		管道
+		<span></span><b></b>
+		</a>
+	</li>
+
+	<li data-id="128" data-val="其他" data-myid="1" >
+		<a href="javascript:;" >
+		<img src="css/images/material/others/others.png" /><br/>
+		其他
+		<span></span><b></b>
+		</a>
+	</li>
+
+</ul>
+</div>
+
+
+<div class="h5_nav"><span>故障描述</span></div>
+<div class="text_suggest" style="background:none; height:100px;">
+<textarea class="textarea_input" style="border-radius:10px; width:90%; padding:5px; height:81px; margin-top:8px; border:1px solid #CCC" placeholder="请补充您的故障情况" onkeyup="words_deal(this,250,'textCount');" id="suggest"></textarea>
+</div>
+
+
+<div class="h5_nav"><span>上传故障图片</span></div>
+<div class="upload_img clearfix" id="upload_img" style="background:#fff;padding-bottom:0;">
+<div id="upload_contain" >
+
+</div>
+<div class="upload_img_list upload_pre" id="upload_pre" >
+<a id="pickfiles" href="javascript:;">
+<img src="css/images/upload_img.png" />
+</a>
+</div>
+</div>
+
+<div id="vuebox">
+<div class="buy_moreDetail arrwo_p"  @click="showprice=!showprice" v-bind:class="{'on':showprice}">服务详情<i class="arrow"></i></div>
+<div class="price_box" v-show="showprice">
+<table width="100%" border="0" cellpadding="0" cellspacing="0">
+<tr style="color: #7d7e7f; background: rgb(245, 245, 245);"><td colspan="2" style="text-align:left; line-height:19px; padding:1px 5px;">故障提示：如遇多个故障，材料费按实际损耗收取，人工费按实际项目收取，具体价格由师傅确定故障情况后而定。</td></tr>
+ <tbody style="color:#313434">
+ <tr v-for="(item,index) in priceDatas"><td v-html="item.repairitemname" style="text-align:left;padding-left:2px;"></td> <td v-html="item.pricememo"></td></tr>
+ </tbody>
+ </table>
+</div>
+
+
+<div class="buy_moreDetail arrwo_p"  @click="showservice=!showservice" v-bind:class="{'on':showservice}">服务须知<i class="arrow"></i></div>
+<div class="service_detail" v-show="showservice">
+注：<br/>1、无标注均为不含材料费；代购材料运输费用按“其他项目”中相应项目收费。<br/>2、3.5米以上高梯、平台按“其他项目”中相应高空设备费用收费。<br/>3、计量单位以米、平方米、时间、公斤为计算单位的维修项目：数量单位跳幅按“0.5”取整计算。<br/>4、在保修期间内因工匠技术问题造成的二次维修，则免收二次维修费用，如因客户使用不当造成二次维修，则另行收费。<br/>5、验收结果以客户签字为准。<br/>6、涉及第三方协调工作由报修人处理。<br/>保修期：<br/>1、维修、更换、翻新项目保修期为30天<br/>2、乳胶漆翻新项目保修期为1年</br>3、疏通项目保修期为3个月。<br/>4、安装项目保修期为3个月<br/>5、免拆砖防水补漏保修期为半年<br/>6、防水层处理保修期为2年<br/>质量承诺：<br/>1、防水渗漏确保100%防漏。<br/>2、管道疏通确保100%通水顺畅。
+</div>
+
+<div style="margin-bottom:70px;"> </div>
+
+<div class="layerbox" id="loginmodal" style="display:none;" ></div>
+<div class="fixed_btn order_footer border-top-ff9c00" id="cart" style="height:auto;">
+<div class="cart_count" @click="showcart" >
+<span></span>
+<i class="faultsCount" id="faultsCount" v-html="total"></i>
+</div>
+<div class="cart-list css-Animate" id="cart_list" >
+<ul>
+<li v-for="(item,index) in productSession"><div>{{item.name}}</div><a href="javascript:;" class="btn_deltel"  @click="delproduct(item.id,index)"></a></li>
+</ul>
+</div>
+<div class="cart-bottom bgcolorff9c00">
+<div class="sum">已选<span class="faultsCount" v-html="total"></span>项服务 <br/>
+<span class="cart_info">免费上门探测，完工后再付钱</span>
+</div>
+<input type="button" class="order_btn" id="savenexbtn" @click="saveSession(1)" value="下一步" />
+</div>
+</div>
+
+    
+<!--案例图片-->
+<div id="example-img" style="display:none;" >
+<div class="upload_img_list beRelative">
+<a href="javascript:;" >
+<img src="css/images/upload_exmaple.png"  class="img-list" />
+<i class="del-img"></i>
+</a>
+</div>
+</div>
+
+
+<!--添加图片按钮-->
+<div id="add-img-btns" style="display:none;">
+<div class="upload_img_list upload_pre" id="upload_pre" >
+<a id="pickfiles" href="javascript:;">
+<img src="css/images/upload_img.png" />
+</a>
+</div>
+</div>
+</div>
+    <script type="text/javascript">
+
+    
+    
+
+    var localId="";
+    var picName=[];
+    var images = {
+            localId: [],
+            serverId: [],
+            downloadId: [],
+            name:[]
+        };
+        
+     //上传图片
+    $("#upload_img").on("click",".upload_pre",function(){
+    	 var $this=$(this);
+    	 
+ 
+    	 
+   	wx.chooseImage({
+    		count: 1, // 默认9
+    	    sizeType: ['compressed'], // 可以指定是原图还是压缩图，默认二者都有
+    	    sourceType: ['album', 'camera'], // 可以指定来源是相册还是相机，默认二者都有
+        success: function (res) {
+        	images.localId = res.localIds;
+        	 uploadImage(res.localIds);
+        	 $this.remove();
+     		
+        },
+        fail:function(res)
+        {
+        	alert(JSON.stringify(res));	
+        } 
+       });
+    	
+   });   
+     
+
+     
+
+    $("#upload_img").on("click",".del-img",function(){
+    		var $this=$(this);	
+    		if($("#upload_pre").is(":hidden"))
+    		$("#upload_pre").show();
+    		var index=$("#upload_img").find(".upload_img_list").index($this.parents(".upload_img_list"));
+    		if(index==0){
+    			$("#pic1").attr("value",$("#pic2").val());
+    			$("#pic2").attr("value",$("#pic3").val());
+    			$("#pic3").attr("value","");
+    		}else if(index==1){
+    			$("#pic2").attr($("#pic3").val());
+    			$("#pic3").val("");
+    		}else{
+    			$("#pic3").val("");
+    		}
+    		
+    		setTimeout(function(){
+    							$this.parents(".upload_img_list").remove();
+    							},500);
+    	 });
+
+
+
+
+
+    /*上传图片  */
+    function uploadImage(localId){
+    	images.serverId = [];
+        jQuery(function(){
+            $.each(images.localId, function(i,n) {
+                wx.uploadImage({
+                    localId: n,
+                    isShowProgressTips: 1,
+                    success: function (res) {
+                    	/* sendServerID(res.serverId); */
+                        images.serverId.push(res.serverId);
+                        downLoadPictures(res.serverId);
+                    },
+                    fail: function (res) {
+                        alert(JSON.stringify(res));
+                    }
+                });
+            });
+        });
+    	
+
+    }
+
+    function downLoadPictures(serviceId){
+    	var params = {  
+    			mediaId:serviceId	
+        };
+    	$.post(  
+    		'/buuwx/json/downLoadPictures.action',        //服务器要接受的url  
+           params,     //传递的参数       
+           function(data){ //服务器返回后执行的函数 参数 data保存的就是服务器发送到客户端的数据
+    			var index=$("#upload_img").find(".upload_img_list").length;
+    			if(index==1){
+    				$("#pic1").attr("value",data);
+    			}else if(index==2){
+    				$("#pic2").attr("value",data);
+    			}else{
+    				$("#pic3").attr("value",data);
+    				/* document.getElementById("pic3").value = data; */
+    			}
+    			
+    			
+    			  
+    			
+    			$("#example-img").find("img").attr("src", "/buuimages/"+data);
+         		var _imghtml=$("#example-img").html(),_addimg=$("#add-img-btns").html();
+         		
+         	    $("#upload_img").append(_imghtml+_addimg);
+         	   if($("#upload_img").find(".upload_img_list").length>=4){
+        	         $("#upload_img .upload_pre").hide();
+                   }
+         	       imageViewerOpition({className:"#upload_img .img-list"});//图片预览
+    			
+    			
+    			
+    			
+    			
+    			
+    			
+           },   
+           'json'  //数据传递的类型  json  
+       ); 
+    }
+    wx.ready(function () {
+    	
+    }
+    );
+    
+    wx.error(function (res) {
+  	  alert(res.errMsg);
+  	  //  $("#errorchargeinfomessage").text("");
+  	  //  $('<span>'+res.errMsg+'</span>').appendTo("#errorchargeinfomessage");
+  	  //  $("#errorchargeinfo").popup("open");
+  	  
+  	  
+  	});
+    
+    
+
+   $(function(){
+    	
+    	var app =  new Vue({
+    		el:"#vuebox",
+    		data:{
+    			postUrl:"/buuwx/workerPortalJson/",
+    			priceDatas:[],
+    			total:localStorage.results?JSON.parse(localStorage.results).length:0,
+    			productSession: localStorage.results?JSON.parse(localStorage.results):[],
+    			showprice:true,
+    			showservice:true
+    		},
+    		created:function(){
+    	        this.loadShow();
+    	        this.selectProduct();
+    	        this.showPriceDetals();
+    	        //console.log(JSON.parse(localStorage.results).length);
+    	       // this.productSession = JSON.parse(localStorage.results);
+    		},
+    		methods:{
+               loadShow:function(){
+            	       var that = this;
+            		   if(localStorage.results){
+            			   that.productSession.forEach(function(obj,index){
+            				   $("#shops_box li[data-id="+obj.id+"]").addClass("active");
+            			   })
+            		   }
+
+               },
+               selectProduct:function(){
+            	   var that = this;
+            	   $("#shops_box").on("click","li",function(){
+            		     var $this = $(this);
+                         if($this.hasClass("active")){ 
+                        	 that.productSession.forEach(function(obj,index){
+                                  if (obj.id == $this.attr("data-id")) {
+                                	  that.productSession.splice(index,1);
+                                	  that.total += -1;
+                                      return false;
+                                  }
+                              });  	 
+    					 }
+                         else{
+                        	 that.productSession.push({id:$this.attr("data-id"),name:$this.attr("data-val"),categoryid:$this.attr("data-myid")});
+                        	 ToGoodOrBad_animate(".cart_count");
+                        	 that.total += 1;
+    					 }
+    					$this.toggleClass("active");
+    					localStorage["results"] = JSON.stringify(that.productSession);
+    					//console.log(JSON.parse(localStorage.results));
+    					that.showPriceDetals();
+            	   })
+               },
+               showPriceDetals:function(){//根据选择的物品查询价格详情
+            	   var that = this;
+            	   if(localStorage.results!="[]"){
+            		   $.post("/buuwx/orderJson/getPriceList.action",{materialids:localStorage.results},function(data){
+            			   /* if(data.success){ */
+            				  //var ff= data.repairitemcityDtos;
+            				   that.priceDatas = data.repairitemcityDtos?data.repairitemcityDtos:[];
+            			  /*  } */
+            		   })
+            	   }
+            	   else{
+            		   that.priceDatas = [];
+            	   }
+               },
+               delproduct:function(id,index){
+            	   var that=this;
+            	   that.productSession.splice(index,1);
+            	   $("#shops_box li[data-id="+id+"]").removeClass("active");
+            	   that.total += -1;
+            	   localStorage["results"] = JSON.stringify(that.productSession);
+            	   that.showPriceDetals();
+            	   //console.log(this.productSession);
+               },
+               showcart:function(){
+            	    if($("#cart").hasClass("showcart"))
+       			    {   
+       			    $("#cart").removeClass("showcart");
+       				$(".cart-list").slideUp(100);
+       				$("#loginmodal").fadeOut(300);
+       		       }
+       		       else
+       			   { 
+       		  		
+                     $("#loginmodal").css({
+       			    display: "block",
+       			    height: $("body").height(),
+       			    "z-index":10
+       	            });
+       				$("#cart").addClass("showcart");
+       				$(".cart-list").slideDown(500);
+       				
+       			 }
+               },
+               saveSession:function(source){//保存session，上传的图片跟故障描述
+            	   savesessioninfo(1);
+               }
+    		}
+    	})	
+    	
+    	
+
+   	 /*--点击空白文档隐藏购物车---*/	 
+   	 $("#loginmodal1,#loginmodal").bind("click",function(e){
+
+   	 				$("#cart").removeClass("showcart");
+   	 				$(".cart-list").slideUp(100);
+   	 				$("#loginmodal").fadeOut(300);
+   	 			    e.stopPropagation();
+   	 })
+    	
+    $("#backuppage").on("click",function(){
+    	savesessioninfo(2);
+    })
+    
+})
+    
+    
+    function savesessioninfo(source){
+		
+		
+		window.location="orderinfo.html"	
+		
+		
+	   $.post(
+    			 "/buuwx/orderJson/saveSessionInformation.action",
+    			 {
+    			 	content:$("#suggest").val(),
+    				pic1:$("#pic1").val(),
+    				pic2:$("#pic2").val(),
+    				pic3:$("#pic3").val()
+    			 },
+    			 function(data){
+    				 if(data){
+    					if(source=="1") //跳转到下一步
+    					window.location="/buuwx/order/displayPlaceOrder.action"	 
+    				    if(source=="2")	//跳转到上一页	  
+    					window.location="/buuwx/order/displayNewOrder.action"	 
+    				 }
+    				 
+    			 },
+    		'json'); 
+    }
+    </script>
+</body>
+</html>

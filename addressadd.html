@@ -1,0 +1,199 @@
+
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>地址添加</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<link rel="stylesheet" href="css/BuuWebApp.css" type="text/css" />
+<link rel="stylesheet" href="css/2017731buucss.css" type="text/css" />
+<link rel="stylesheet" href="css/index.css" type="text/css" />
+<script type="text/javascript" src="js/jquery-1.8.3.min.js"></script>
+<script type="text/javascript" src="js/BuuWebApp.js"></script>
+<script type="text/javascript" src="js/valiDateForm.js"></script>
+<script type="text/javascript" src="js/workDialog.js"></script>
+<script type="text/javascript" src="js/workerInfoCommon.js"></script>
+<script type="text/javascript" src="js/vue.js"></script>
+
+</head>
+<body class="bgcolorgray">
+
+<div class="nav_head postion_rel"><a href="addresslist.html?sourcetype=1"><i></i>返回</a>地址添加</div>
+
+
+<div id="vuebox">
+
+<div class="adress_box bd_top">
+<div class="adr_add_li">
+<span class="address-plus">姓&emsp;&emsp;名：</span> 
+<input type="text" placeholder="请输入您的姓名"  tip="姓名" id="add_name" >
+</div>
+<div class="adr_add_li">
+<span class="address-plus">电&emsp;&emsp;话：</span> 
+<input type="text" maxlength="11" placeholder="请输入您的手机号" tip="手机号" id="add_tel">
+
+</div>
+<div class="adr_add_li">
+<span class="address-plus">&nbsp;验&nbsp;证&nbsp;码：</span> 
+<input type="text"   maxlength="6" placeholder="请输入您的手机验证码" tip="验证码" id="add_code">
+<input type="button" id="sendcode" value="获取验证码" class="sendecode"  @click="findPhoneNo($event)">
+</div>
+<div class="adr_add_li ">
+<span class="address-plus ">定位地址：</span> 
+<div class="disable_requery_box arrow daka_arrow dingwei" id="selectCoor" style="height:46px;line-height:46px;" @click="showagreementBox('showmapbox')">请选择您所在地理位置</div>
+<input type="hidden" id="mapvalue" tip="选取坐标" />
+</div>
+
+<div class="adr_add_li">
+<span class="address-plus">详细地址：</span> 
+<input type="text"   placeholder="如:小区、门牌号等" tip="详细地址" id="add_adress_text">
+</div>
+
+</div>
+
+
+<div class="bg_btncenter"><input type="button" value="保存地址"  @click="submitbtn"  id="submit_nex_btn" class="sub_btn upbgcolor" style="position: static; background: rgb(254, 217, 0);"></div>
+
+
+
+
+<input type="hidden" id="sourcetype" value="1">
+
+
+
+<!--地图弹窗-->
+<div class="Useragreement" id="showmapbox">
+<div class="nav_head postion_rel" style="z-index:0;    position: absolute;"><a href="javascript:;" id="sureBtn"><i></i>返回</a>选择您所在地址</div>
+ <!-- <header class="bar bar-nav">
+<h1 class="title">选择您所在地址</h1>
+<a class="icon  pull-left hide-cln hashico" id="sureBtn">返回</a>
+</header>  -->
+<div style="margin-top:45px; height:100%"id="mapBox" >
+</div>
+</div>
+
+
+</div>
+</body>
+
+
+<script type="text/javascript">
+
+$(function(){
+	validate = new validate();
+	
+var app =  new Vue({
+	el:"#vuebox",
+	data:{
+		postUrl:"/buuwx/workerPortalJson/",
+		
+	},
+	created:function(){
+        
+	},
+	methods:{
+	   showagreementBox:function(a){
+		   var bolMap =$("#mapBox");
+	       if(bolMap.find("iframe").length==0){workerCommon.mapApiPosition("#mapBox");}else{}
+		   workerCommon.goBackUrlShow(a); 
+	   },
+	       loops:function(e){  //验证码倒计时
+		   var num = 60,clock = null;
+			  clock = setInterval(loop,1000);
+			  function loop(){
+			   if(num > 0) {
+	               num--;
+	               e.target.value = num +'后重试';
+	               /* e.target.style.backgroundColor='#FFF'; */
+	               e.target.disabled = true;
+	           } else {
+	               clearInterval(clock);
+	               e.target.value = '获取验证码';
+	               /* e.target.style.backgroundColor='#FFF'; */
+	               e.target.disabled = false;
+	               num = 60;
+	           }
+			  }
+		   },
+		   findPhoneNo:function(e){ //发送验证码
+			
+		   var _this = this;
+		   
+		   
+		   
+		   
+		   
+		   
+		      if(validate.isPhone($("#add_tel"))){
+			     this.loops(e);
+			     $.post(
+						  '/buuwx/json/sendPhoneVerlification.action',
+						  {
+							  phone:$("#add_tel").val(),
+					  		  	
+				  		  },function (data){
+				  			  if(!data){
+				  				showTips("发送验证码错误，请联系管理员！","");
+				  			  }
+				  		  },
+				  'json');
+		      }
+		 
+	       },
+	   	 submitbtn:function(){
+            var that = this;
+	   		var add_name = $("#add_name");
+	   		var selectCoorinfo = $("#mapvalue");
+	   		var add_adress_text =$("#add_adress_text");
+	   		var add_tel = $("#add_tel");
+	   		var add_code = $("#add_code");	
+	   		
+		     if(validate.name(add_name)&&validate.isPhone(add_tel)&&validate.isValEmpty(add_code)&&validate.isValEmpty(selectCoorinfo)&&validate.isValEmpty(add_adress_text)){ 
+			 
+			 window.location="addresslist.html";
+			 
+			 
+			 
+		    	 $.post('/buuwx/json/addNewAddressByAjax.action',
+		    			 {
+					    custname:$("#add_name").val(),
+					    addnumber:$("#add_adress_text").val(),
+			   			coordinate:$("#mapvalue").val(),
+			   			latitude:$("#mapvalue").attr("data-id").split(",")[0],
+			   			longitude:selectCoorinfo.attr("data-id").split(",")[1],
+			   			cityname:selectCoorinfo.attr("data-city"),
+			   			phone:add_tel.val(),
+			   			verificationCode:add_code.val(),
+			   			},
+		  			   function(data){
+		  				   if(data.success){
+		  					       showTips("新增成功",function(){
+		  					    	 jumpurl($("#sourcetype").val())
+ 		  							 //window.location.href ="/buuwx/address/displayAddressList.action?sourcetype="+$("#sourcetype").val();
+		  						   });
+		  				   }
+		  			   },'json');	
+			 
+             }
+	   }
+	   
+	   
+	}
+  })
+})
+function jumpurl(sourcetype){
+	  if(sourcetype==1){//1表示正常下单，2表示一键下单，3表示我的地址	
+		    window.location="orderinfo.html"; 
+	   }
+	   if(sourcetype==2){//1表示正常下单，2表示一键下单，3表示我的地址	
+		    window.location="onekeyorder.html"; 
+	   }
+	   if(sourcetype==3){//1表示正常下单，2表示一键下单，3表示我的地址	
+		   window.location="personalcenter.html";
+	   }
+}
+</script>
+
+
+</html>

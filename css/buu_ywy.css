@@ -1,0 +1,168 @@
+@charset "utf-8";
+/* CSS Document */
+
+.ywy_login{ width:80%; position:relative; left:10%; height:40px;}
+.mg_top_45{ margin-top:45px;}
+.wd_100{ width:100%;}
+.mg_top_10{ margin-top:10px;}
+.mg_top_20{ margin-top:20px;}
+.mg_top_5{ margin-top:5px;}
+.input_bd_ywy{ 
+    color:#fff; 
+    height:36px;
+    border-radius:25px;
+	border:1px solid #fff; 
+	text-indent:10px;
+	overflow:hidden; 
+	background:none; 
+	text-shadow: #4184a6 2px 2px 3px;
+	box-sizing:border-box;
+	box-shadow: 0 1px 10px rgba(0,0,0,0.1) inset;
+}
+
+.input_bd_ywy:focus{
+　　transition:border linear .2s,box-shadow linear .5s;
+　　-moz-transition:border linear .2s,-moz-box-shadow linear .5s;
+　　-webkit-transition:border linear .2s,-webkit-box-shadow linear .5s;
+　　outline:none;border-color:#F4D146;
+　　box-shadow:0 2px 8px #CC9900;
+　　-moz-box-shadow:0 2px 8px #CC9900;
+　　-webkit-box-shadow:0 2px 8px #CC9900;
+　　}
+
+.input_bd_ywy::-webkit-input-placeholder { /* WebKit browsers */
+    color:#fff;
+}
+.input_ywy_btn{ height:36px; background:#51b1f8; border-radius:25px; border:0px; color:#fff;box-shadow: 0 1px 10px rgba(0,0,0,0.1) inset;}
+
+.ywy_bg{ background:#01a6e6; text-align:center; color:#fff; padding-top:25px; overflow:hidden; padding-bottom:10px;}
+.ywy_logo{
+	width:40%; 
+	float:left;
+	text-align:right;
+	
+}
+.ywy_head_right{ width:60%;  right:0px; float:right; padding-top:5px; }
+.ywy_head_right span{ display:block; padding:3px 5px; text-align:left; padding-left:25px;}
+.ywy_logo img{ border-radius:50%; width:95px;height:95px;  border-radius:50%; border:3px solid #fff;}
+.ywy_bg h3{ height:20px; padding-bottom:6px; font-weight:normal; padding-top:3px;}
+.ywy_info{ height:20px;  display:block;}
+.ywy_info span{ text-indent:14px; line-height:20px;}
+.ywy_info span.span1{ display:inline-block; background:url(images/ywy/tel.png) left center no-repeat; background-size:12px 12px; margin-right:20px;}
+.ywy_info span.span2{ display:inline-block; background:url(images/ywy/user.png) left center no-repeat; background-size:10px 12px; padding-top:3px;}
+
+.ywy_center_a{ display:block;}
+.ywy_center_a a{ padding-left:10px; padding-right:10px;   margin-bottom:10px;
+	 margin-top:15px; 
+	 height:30px;
+	 line-height:30px; text-indent:20px; border-radius:5px;display:inline-block; padding-left:4px; margin-left:5px; margin-right:5px;}
+.look_1wm{
+	 background:url(images/ywy/ico1.png) 6px center #fff no-repeat;
+	 
+	 background-size:13px 10px;
+	
+	 
+	
+	
+	 margin:auto; 
+
+  
+}
+.ywy_center_a a.look_2wm{background:url(images/ywy/ico2.png) 6px center #fff no-repeat;background-size:15px 13px;}
+.ywy_center_a a.look_3wm{background:url(images/ywy/ico4.png) 6px center #fff no-repeat;background-size:13px 13px;}
+
+/*--个人中心--*/
+.ywy_links{ margin:5px auto;}
+.ywy_links li{ width:50%;height:120px; background:#fff;}
+.ywy_links li:nth-child(2n) {
+    border-right: 0px;
+}
+.ywy_links li:nth-child(3n) {
+    border-right: #e0e0e0 solid 1px;
+}
+.ywy_links li a img{ width:61px; height:61px; position:absolute; top:13px; margin-left: -31.5px; left:50%; }
+
+.ywy_links li a{ color:#848484;line-height:180px;}
+.wd33 a{ width:33.33%;}
+
+.total_header{ padding:10px; margin:5px auto; background:#fff;}
+.total_header span{ display:block;}
+.total_header .opiton_select{ 
+background:url(images/xiala_ico.png) right no-repeat;
+background-size:14px; 
+width:63px;
+display:block;
+cursor:pointer;
+
+} 
+.opiton_select em{ font-style:normal;}
+.total_header span.w90{ width:90px;} 
+.total_header .total_money{
+ position:absolute;
+ right:10px;
+ top:8px;
+}
+.total_header .total_money font{
+ font-size:1rem;
+
+}
+.salesman{ padding-top:5px; padding-bottom:5px;}
+.salesman a{  margin-top:0px; }
+.salesman_list3 li{ padding-top:18px; overflow:hidden; height:77px;}
+.salesman_list3 li a{color: #7a7a7a;}
+.salesman_list3 li img{ top:19px;}
+.salesman_list3 li span{ position:absolute; z-index:99; left:30px; top:45px; font-size:1.2rem;}
+.salesman_list3 li span b{ font-size:1.6rem;}
+
+.salesman_list3 li .date_total_ico{ position:absolute; left:20px; top:20px; z-index:98; width:60px; height:60px; border-radius:50%; background:#ff9c00; line-height:60px; font-size:1.6rem; text-align:center; color:#fff; font-family:"Lucida Sans Unicode", "Lucida Grande", sans-serif}
+.border-bt1{ border-bottom:1px solid #a59999;}
+.requery_box{ line-height:22px; margin-top:12px; width:90%; min-height:40px;  color:#4d4a4a;}
+.disable_requery_box{  padding-top:12px; width:98%; height:34px;  color:#b0b0b0;}
+.qch_select_time{ background:url(images/card_time.png) right no-repeat; background-size:12px 12px;   padding-top:12px; width:180px; height:34px;  color:#4d4a4a;}
+.text_area_update{ width:96%; margin-top:5px; border:1px solid  #CCC; margin-left:1%; min-height:60px; background:#CCC; border-radius:5px; }
+
+.select_li_total{
+	left:0px;
+	padding-top:7px;
+	padding-bottom:7px;
+    position: absolute;
+    z-index: 9999;
+    width: 100%;
+    background-color: #333;
+    -webkit-transition: all .5s ease-in;
+    -moz-transition: all .5s ease-in;
+    -ms-transition: all .5s ease-in;
+    -o-transition: all .5s ease-in;
+    transition: all .5s ease-in;
+    /*transition-timing-function: ease-in;
+    -webkit-transition-timing-function: ease-in;
+    -moz-transition-timing-function: ease-in;
+    -o-transition-timing-function: ease-in;*/
+	overflow: hidden;
+	top:80px;
+	
+	box-shadow: 0px 3px 2px #ccc;
+	visibility:hidden;
+}
+.open {
+    opacity:0.9; 
+	display:block;
+	visibility:visible;
+	top:40px;
+}
+.select_li_total a{ height:35px; line-height:35px; display:block; color:#fff; width:33.3%; text-align:center; float:left;}
+.salesman_area { height:auto;  width:100%; margin-top:5px; padding-bottom:5px; position:relative; position:99;}
+.salesman_area a{ width:33.33%;  height:45px; padding-top:5px; margin-top:0px; line-height:18px; }
+.salesman_area a.selected::after {
+    content: "";
+    border-bottom: 2px solid #ff9c00;
+    position: absolute;
+    width: 100%;
+    bottom: -5px;
+    left: 0px;
+}
+.salesman_area a.selected{ color:#7f7f7f;}
+.salesman_area_list li{ margin-top:0px; border-bottom:0px; position:relative; z-index:98; padding-left:5px;}
+.saleman_zt001{ width:15px; height:17px; background:url(images/ywy/user001.png) no-repeat center; background-size:cover; position:absolute; right:7px; top:15px;}
+.saleman_zt002{ width:18px; height:17px; background:url(images/ywy/qiaochui.png) no-repeat center; background-size:cover; position:absolute; right:7px; top:15px;}
+.position_rt33{ right:33px;}

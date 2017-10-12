@@ -1,0 +1,69 @@
+@charset "utf-8";
+/* CSS Document */
+body
+{
+
+
+ color:#7a7a7a;;
+     -webkit-tap-highlight-color: transparent;
+      tap-highlight-color: transparent;
+       font-family: "microsoft yahei";
+        font-style: normal;
+  -webkit-font-smoothing: antialiased;
+  -webkit-text-stroke-width: 0.1px;
+  -moz-osx-font-smoothing: grayscale;
+  background:#fff;
+  font:.8em/1.8 "microsoft yahei","Tahoma",\5b8b\4f53,Arial;
+}
+
+html, body, div, span, applet, object, iframe, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, font, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, dl, dt, dd, ol, ul, li, fieldset, form, input, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, h1, h2, h3, h4, h5, h6
+{
+margin: 0;
+padding: 0;
+list-style-type: none;
+
+  
+}
+.work_zm_dh{
+	 position:absolute;
+     left:50%;
+	 top:28px;
+	 margin-left:-112px;
+	 z-index:999;
+	 animation:fadeInRight 2s ease-in-out;
+	 -webkit-animation:fadeInRight 2s ease-in-out;
+	 o-animation:fadeInRight 2s ease-in-out;
+     /*animation-delay:1s;/*动画延迟时间**/
+
+	 }
+@-webkit-keyframes fadeInRight {
+	0% {
+		opacity: 0;
+		-webkit-transform:translateY(-276px);
+	}
+	100% {
+		opacity:1;
+		-webkit-transform:translateY(0px);
+	}
+	
+}
+@keyframes fadeInRight {
+	0% {
+		opacity: 0;
+		transform:translateY(-276px);
+		-webkit-transform:translateY(-276px);
+	}
+	100% {
+		opacity:1;
+		transform:translateY(0px);
+		-webkit-transform:translateY(0px);
+	}
+	
+}
+a{ text-decoration:none; color:#a0a0a0;}
+.worker_gz{ font-size:1.5rem; font-weight:bold; color:#565656; text-align:center;margin-top:10px; padding-bottom:5px;position: absolute;width: 230px;left: 50%;margin-left: -115px;top: 305px;}
+.zm_img{ padding-top:10px; padding-bottom:10px; margin:0px auto;}
+.text-center{ text-align:center;}
+.worker_btn{ position:absolute; width:234px;left:50%;margin-left:-117px;margin-top:50px;top: 305px;}
+.company_name{ font-weight:bold; font-size:0.8rem; color:#a0a0a0; text-align:center; padding:5px 0px; position:absolute; width:100%; top:305px; margin-top:120px;}
+.company_adress{font-size:0.7rem; color:#a0a0a0; line-height:20px;position:absolute; width:100%; top:305px; margin-top:150px; text-align:center; padding-bottom:7px;}
